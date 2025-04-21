@@ -29,6 +29,9 @@
 
 /* End font configuration */
 
-:root{
-    --green-p-0: #35a003;
+html {
+    @apply !pr-0;
+    overflow: hidden;
 }
+
+  

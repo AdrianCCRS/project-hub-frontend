@@ -2,15 +2,12 @@ import {
   Navbar,
   NavbarBrand,
   NavbarContent,
-  NavbarItem,
   Link,
-  Button,
-  DropdownItem,
-  DropdownTrigger,
-  Dropdown,
-  DropdownMenu,
   Divider,
   Chip,
+  NavbarMenuItem,
+  NavbarMenuToggle,
+  NavbarMenu
 } from "@heroui/react";
 import { CNavDropdownMenu } from "./CNavDropdownMenu";
 import { 
@@ -22,49 +19,27 @@ import {
   EditGroup,
   ProfileIcon,
   LogoutIcon,
+  ChevronDown
 } from "./Icons";
-import { color } from "framer-motion";
-
+import React from "react";
 export const PHLogo = () => {
   return (
     <img src="./src/assets/phlogo.svg" alt="logo"/>
   );
 };
 
-
-export const ChevronDown = ({fill, size, height, width, ...props}) => {
-  return (
-    <svg
-      fill="none"
-      height={size || height || 24}
-      viewBox="0 0 24 24"
-      width={size || width || 24}
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <path
-        d="m19.92 8.95-6.52 6.52c-.77.77-2.03.77-2.8 0L4.08 8.95"
-        stroke={fill}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeMiterlimit={10}
-        strokeWidth={1.5}
-      />
-    </svg>
-  );
-};
-
 export default function CNavbar() {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const icons = {
-    chevron: <ChevronDown fill="currentColor" size={16} />,
     create_project: <CreateProject fill="currentColor" size={30} />,
-    create_group: <CreateGroup fill="currentColor" size={40} />,
-    edit: <Edit fill="currentColor" size={20} />,
-    add: <Add fill="currentColor" size={20} />,
     edit_project: <EditProject fill="currentColor" size={30} />,
+    create_group: <CreateGroup fill="currentColor" size={40} />,
     edit_group: <EditGroup fill="currentColor" size={30} />,
     profile: <ProfileIcon fill="currentColor" size={35} />,
     logout: <LogoutIcon fill="currentColor" size={35} />,
+    chevron: <ChevronDown fill="currentColor" size={16} />,
+    edit: <Edit fill="currentColor" size={20} />,
+    add: <Add fill="currentColor" size={20} />,
   };
 
   const dropdownItems = [
@@ -82,11 +57,20 @@ export default function CNavbar() {
     }
   ];
 
+  const menuItems = [
+    "Crear un nuevo proyecto",
+    "Editar un proyecto",
+    "Crear un nuevo grupo",
+    "Editar un grupo",
+    "Editar perfil",
+    "Cerrar sesión"
+  ];
+
   return (
     <Navbar maxWidth="full" className="font-manrope" isBordered={true} isBlurred={true} shouldHideOnScroll={true}>
       <NavbarBrand>
         <PHLogo />
-        <p className="font-bold text-xl ml-4">Dashboard</p>
+        <Link color="foreground" href="#"  className="font-bold text-xl ml-4">Dashboard</Link>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="end">
         <CNavDropdownMenu
@@ -157,6 +141,28 @@ export default function CNavbar() {
 
         </CNavDropdownMenu>
       </NavbarContent>
+
+      <NavbarMenu>
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={`${item}-${index}`}>
+            <Link
+              className="w-full gap-2"
+              color={
+                index === menuItems.length - 1 ? "danger" : "foreground"
+              }
+              href="#"
+              size="lg"
+              >
+              {Object.values(icons)[index] || null}
+              {item}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
+      <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="sm:hidden"
+        />
     </Navbar>
   );
 }
