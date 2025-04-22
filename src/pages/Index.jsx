@@ -98,9 +98,9 @@ function Index() {
   return (
     <HeroUIProvider className="overflow-x-hidden">
       <CNavbar></CNavbar>
-      <main className="flex flex-row items-center justify-center w-auto h-screen">
+      <main className="flex flex-row items-center justify-center w-auto h-screen-with-navbar">
       <YourProjects yourProjects={yourProjects}></YourProjects>
-      <CardContainer className="gap-5 justify-center px-10" projects={projects}></CardContainer>
+      <CardContainer className="gap-5 justify-center pt-0 p-10" projects={projects}></CardContainer>
       </main>
     </HeroUIProvider>
   );

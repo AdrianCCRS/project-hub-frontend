@@ -34,4 +34,7 @@ html {
     overflow: hidden;
 }
 
+.h-screen-with-navbar{
+    height: calc(100vh - 4rem);
+}
   
