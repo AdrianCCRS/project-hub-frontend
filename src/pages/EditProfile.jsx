@@ -136,7 +136,7 @@ function Profile() {
                     </div>
                 </Form>
             
-                <div className="flex flex-col items-center justify-center self-center hidden md:flex">
+                <div className=" flex-col items-center justify-center self-center hidden md:flex">
                     <Image
                     isBlurred
                     alt="Babillito Writing"
