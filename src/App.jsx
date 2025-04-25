@@ -2,6 +2,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
 import Login from './pages/Login';
+import Register from './pages/Register';
 
 
 export default function App() {
@@ -10,6 +11,7 @@ export default function App() {
       {/* Rutas públicas */}
       <Route path="/projects" element={<Index />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
       {/* Rutas protegidas
       <Route element={<PrivateRoutes />}>

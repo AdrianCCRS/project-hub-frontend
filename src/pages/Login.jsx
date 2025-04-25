@@ -22,10 +22,7 @@ const Login = () => {
 
   return (
     <div className='bg-gradient-to-r from-gray-900 via-[#1BAA7D] to-gray-800 text-white flex items-center justify-center min-h-screen'>
-      
-      
         <CLogin/>
-      
     </div>
   );
 };
