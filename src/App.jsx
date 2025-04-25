@@ -3,12 +3,14 @@ import { Routes, Route } from 'react-router-dom';
 import Index from './pages/Index';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Landing from './pages/Landing';
 
 
 export default function App() {
   return (
     <Routes>
       {/* Rutas públicas */}
+      <Route path="/" element={<  Landing />} />
       <Route path="/projects" element={<Index />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />

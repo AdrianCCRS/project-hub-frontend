@@ -9,6 +9,19 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        float: 'float 3s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+      },
+      fontFamily: {
+        baloo: ['"Baloo Thambi 2"', 'cursive'],
+        mukta: ['Mukta', 'sans-serif'],
+      },
       colors: {
         primary: '#1BAA7D',       // Verde claro
         secondary: '#1bc632',     // Verde chinchoso para hover
