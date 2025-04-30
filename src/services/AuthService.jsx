@@ -1,5 +1,5 @@
 import axios from "axios";
-const api = "http://localhost:8080/api";
+const api = "http://localhost:8080";
 import { handleError } from "../helpers/ErrorHandler";
 
 export const loginAPI = async (email, password) => {
