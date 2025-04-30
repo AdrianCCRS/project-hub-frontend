@@ -1,7 +1,9 @@
-import React, { createContext, useEffect } from "react";
+import React, { createContext, useEffect, useState} from "react";
 import { loginAPI, registerAPI } from "../services/AuthService";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const UserContext = createContext();
 
 export const UserProvider = ({children}) =>{
@@ -46,7 +48,7 @@ export const UserProvider = ({children}) =>{
                 //Aqui puedo armar un objeto con el usuario y su informacion
                 setToken(res?.data.token);
                 setUser(res?.data.userId);
-                toast.success("Usuario registrado correctamente");
+                toast.success("Bienvenido a ProjectHub");
                 navigate("/projects");
             }
         }).catch(e => toast.warning("Ha ocurrido un error en el servidor"));
