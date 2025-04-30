@@ -5,24 +5,32 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Landing from './pages/Landing';
 
+import { ToastContainer } from 'react-toastify';
+import { UserProvider } from './context/useAuth';
+
 
 export default function App() {
   return (
-    <Routes>
-      {/* Rutas públicas */}
-      <Route path="/" element={<  Landing />} />
-      <Route path="/projects" element={<Index />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+    <>
+    <UserProvider>
+        <Routes>
+          {/* Rutas públicas */}
+          <Route path="/" element={<  Landing />} />
+          <Route path="/projects" element={<Index />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-      {/* Rutas protegidas
-      <Route element={<PrivateRoutes />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Route>
-
-      {/* Ruta 404 opcional */}
-      {/* <Route path="*" element={<div>404 - Página no encontrada</div>} />  */}
-    </Routes>
+          {/* Rutas protegidas
+          <Route element={<PrivateRoutes />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+          
+          {/* Ruta 404 opcional */}
+          {/* <Route path="*" element={<div>404 - Página no encontrada</div>} />  */}
+        </Routes>
+        <ToastContainer />
+      </UserProvider>
+    </>
   );
 }
