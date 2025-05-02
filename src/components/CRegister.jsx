@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { useAuth } from '../context/useAuth';
+import { useForm } from 'react-hook-form';
+import { form } from '@heroui/react';
 
 export default function CRegister() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const { registerUser } = useAuth();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -54,29 +58,9 @@ export default function CRegister() {
       return;
     }
 
-    const endpoint = "/auth/register";
-    try {
-      const response = await axios.post(`http://localhost:8080${endpoint}`, formData, {
-        headers: { "Content-Type": "application/json" },
-      });
+    registerUser(formData.firstName, formData.lastName, formData.email, formData.password, formData.program, formData.description)
 
-      setMessage(response.data.message || "Registro exitoso");
-
-      // Limpiar formulario
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        program: "",
-        description: "",
-      });
-
-      setTimeout(() => navigate("/login"), 2000);
-    } catch (err) {
-      console.error("Error en la petición:", err.response?.data || err);
-      setError(err.response?.data?.error || "Error en el registro");
-    }
+    
   };
 
   const programas = [
