@@ -7,6 +7,7 @@ import Landing from './pages/Landing';
 
 import { ToastContainer } from 'react-toastify';
 import { UserProvider } from './context/useAuth';
+import { ProjectsContextProvider } from './context/useProjects';
 
 
 export default function App() {
@@ -16,7 +17,11 @@ export default function App() {
         <Routes>
           {/* Rutas públicas */}
           <Route path="/" element={<  Landing />} />
-          <Route path="/projects" element={<Index />} />
+          <Route path="/projects" element={
+            <ProjectsContextProvider>
+              <Index />
+            </ProjectsContextProvider>}
+             />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
