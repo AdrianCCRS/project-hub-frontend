@@ -30,8 +30,8 @@
 /* End font configuration */
 
 html {
-    /* @apply !pr-0;
-    overflow: hidden;*/
+    @apply !pr-0;
+    overflow: hidden;
 } 
 
 .h-screen-with-navbar{
