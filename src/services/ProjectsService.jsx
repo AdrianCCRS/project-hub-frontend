@@ -3,7 +3,7 @@ import { handleError } from "../helpers/ErrorHandler";
 
 export const getAllProjectsAPI = async () => {
     try {
-        const data = await api.get("/projects");
+        const data = await api.get("/api/projects");
         return data;
     } catch (error){
         handleError(error);
@@ -12,7 +12,7 @@ export const getAllProjectsAPI = async () => {
 
 export const getProjectByUserIdAPI = async (userId) => {
     try {
-        const data = await api.get("/projects/user/" + userId);
+        const data = await api.get("/api/projects/user/" + userId);
         return data;
     } catch (error){
         handleError(error);
