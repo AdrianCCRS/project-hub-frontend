@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import { AuthProvider } from './context/useAuth';
 import { ProjectsContextProvider } from './context/useProjects';
 import { UserContextProvider } from './context/useUser';
+import PrivateRoute from './components/PrivateRoute';
 
 
 export default function App() {
@@ -18,27 +19,30 @@ export default function App() {
     <AuthProvider>
         <Routes>
           {/* Rutas públicas */}
-          <Route path="/" element={<  Landing />} />
-          <Route path="/projects" element={
-            <ProjectsContextProvider>
-              <Index />
-            </ProjectsContextProvider>}
-             />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path='/profile/edit' element={
-            <UserContextProvider>
-              <EditProfile />
-            </UserContextProvider>
-            } />
+                <Route path="/" element={<Landing />} />
+               
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                
 
-          {/* Rutas protegidas
-          <Route element={<PrivateRoutes />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          </Route>
-          
-          {/* Ruta 404 opcional */}
+                {/* Rutas protegidas */}
+                <Route path="/projects" element={
+                  <PrivateRoute>
+                    <ProjectsContextProvider>
+                      <Index />
+                    </ProjectsContextProvider>
+                  </PrivateRoute>}
+                />
+                <Route path='/profile/edit' element={
+                  <PrivateRoute>
+                    <UserContextProvider>
+                      <EditProfile />
+                    </UserContextProvider>
+                  </PrivateRoute>}
+                />
+
+                
+                {/* Ruta 404 opcional */}
           {/* <Route path="*" element={<div>404 - Página no encontrada</div>} />  */}
         </Routes>
         <ToastContainer />
