@@ -9,6 +9,7 @@ import EditProfile from './pages/EditProfile';
 import { ToastContainer } from 'react-toastify';
 import { AuthProvider } from './context/useAuth';
 import { ProjectsContextProvider } from './context/useProjects';
+import { UserContextProvider } from './context/useUser';
 
 
 export default function App() {
@@ -25,7 +26,11 @@ export default function App() {
              />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path='/profile/edit' element={<EditProfile />} />
+          <Route path='/profile/edit' element={
+            <UserContextProvider>
+              <EditProfile />
+            </UserContextProvider>
+            } />
 
           {/* Rutas protegidas
           <Route element={<PrivateRoutes />}>
