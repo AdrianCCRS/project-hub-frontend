@@ -4,9 +4,9 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const UserContext = createContext();
+const AuthContext = createContext();
 
-export const UserProvider = ({children}) =>{
+export const AuthProvider = ({children}) =>{
     const navigate = useNavigate();
     const [token, setToken] = useState(null);
     const [user, setUser] = useState(null);
@@ -67,10 +67,10 @@ export const UserProvider = ({children}) =>{
     }
 
     return (
-        <UserContext.Provider value={{user, token, isLoggedIn, registerUser, loginUser, logout}}>
+        <AuthContext.Provider value={{user, token, isLoggedIn, registerUser, loginUser, logout}}>
             {isReady ? children : null}
-        </UserContext.Provider>
+        </AuthContext.Provider>
     );
 };
 
-export const useAuth = () => React.useContext(UserContext);
+export const useAuth = () => React.useContext(AuthContext);
