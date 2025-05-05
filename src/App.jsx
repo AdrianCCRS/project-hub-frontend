@@ -7,14 +7,14 @@ import Landing from './pages/Landing';
 import EditProfile from './pages/EditProfile';
 
 import { ToastContainer } from 'react-toastify';
-import { UserProvider } from './context/useAuth';
+import { AuthProvider } from './context/useAuth';
 import { ProjectsContextProvider } from './context/useProjects';
 
 
 export default function App() {
   return (
     <>
-    <UserProvider>
+    <AuthProvider>
         <Routes>
           {/* Rutas públicas */}
           <Route path="/" element={<  Landing />} />
@@ -37,7 +37,7 @@ export default function App() {
           {/* <Route path="*" element={<div>404 - Página no encontrada</div>} />  */}
         </Routes>
         <ToastContainer />
-      </UserProvider>
+      </AuthProvider>
     </>
   );
 }
