@@ -10,9 +10,9 @@ export const getUserById = async (id) => {
     } 
 }
 
-export const getAllUsers = async () => {
+export const getAllUsersAPI = async () => {
     try {
-        const data = await api.get("/api/users/");
+        const data = await api.get("/api/users");
         return data;
     } catch (error){
         handleError(error);
