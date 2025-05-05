@@ -18,7 +18,8 @@ import React from "react";
 import {CalendarDate, parseDate} from "@internationalized/date";
 import {ShowPassword, HiddenPassword} from "../components/Icons"
 import CNavbar from "../components/CNavbar";
-function Profile() {
+
+function EditProfile() {
     const [isVisible, setIsVisible] = React.useState(false);
 
     const toggleVisibility = () => setIsVisible(!isVisible);
@@ -141,7 +142,7 @@ function Profile() {
                     isBlurred
                     alt="Babillito Writing"
                     className="m-5"
-                    src="./src/assets/babillito/babillito_writing.png"
+                    src="../src/assets/babillito/babillito_writing.png"
                     width={240}
                     />
                 </div>
@@ -150,7 +151,7 @@ function Profile() {
                 <Card className="min-w-[400px] min-h-[250px] p-2 bg-gradient-to-tl from-[#0f0f0f] to-[#032b0c]">
                     <div className="relative w-full h-full">
                         <img 
-                            src="./src/assets/babillito/babillito_nobg.png" 
+                            src="../src/assets/babillito/babillito_nobg.png" 
                             alt="Babillo Background" 
                             className="absolute left-24 opacity-35 w-50 h-auto pointer-events-none"
                         />
@@ -181,7 +182,7 @@ function Profile() {
                 <Link color="foreground" href="https://uis.edu.co/es/" isExternal={true} className="gap-3 flex flex-col hover:scale-105 transition-transform duration-300">
                     <h1 className="font-manrope text-xl">Desarrollado por estudiantes de: </h1>
                         <img 
-                            src="./src/assets/uisLogo.png" 
+                            src="../src/assets/uisLogo.png" 
                             alt="UIS Logo" 
                             width={300}
                             />
@@ -193,4 +194,4 @@ function Profile() {
     );
   }
   
-  export default Profile;
+  export default EditProfile;
