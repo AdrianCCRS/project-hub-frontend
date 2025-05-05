@@ -13,7 +13,7 @@ api.interceptors.request.use(
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
       } else {
-        console.log("No token found");
+        console.log("No token found.");
       }
     return config;
   },
