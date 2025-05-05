@@ -29,11 +29,6 @@
 
 /* End font configuration */
 
-html {
-    @apply !pr-0;
-    overflow: hidden;
-} 
-
 .h-screen-with-navbar{
     height: calc(100vh - 4rem);
 }
