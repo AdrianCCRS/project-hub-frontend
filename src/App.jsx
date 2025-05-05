@@ -4,6 +4,7 @@ import Index from './pages/Index';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Landing from './pages/Landing';
+import EditProfile from './pages/EditProfile';
 
 import { ToastContainer } from 'react-toastify';
 import { UserProvider } from './context/useAuth';
@@ -24,6 +25,7 @@ export default function App() {
              />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path='/profile/edit' element={<EditProfile />} />
 
           {/* Rutas protegidas
           <Route element={<PrivateRoutes />}>
