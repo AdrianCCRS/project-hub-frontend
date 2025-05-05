@@ -22,6 +22,9 @@ import {
   ChevronDown
 } from "./Icons";
 import React from "react";
+import "../css/navbar.css"
+
+
 export const PHLogo = () => {
   return (
     <img src="../src/assets/phlogo.svg" alt="logo"/>
