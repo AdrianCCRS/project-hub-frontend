@@ -1,0 +1,4 @@
+html {
+    @apply !pr-0;
+    overflow: hidden;
+}
