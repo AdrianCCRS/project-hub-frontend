@@ -1,11 +1,12 @@
 import React, {createContext, useEffect, useState} from "react";
-import { getUserById, updateUser } from "../services/UserService";
+import { getAllUsersAPI, getUserById, updateUser } from "../services/UserService";
 import { toast } from "react-toastify";
 
 const UserContext = createContext();
 
 export const UserContextProvider = ({children}) =>{
     const [user, setUser] = useState(null);
+    const [allUsers, setAllUsers] = useState(null);
     const [isReady, setIsReady] = useState(false);
     useEffect(() =>{
         getUser(localStorage.getItem("userId"));
@@ -30,8 +31,14 @@ export const UserContextProvider = ({children}) =>{
         }).catch(e => toast.warning("Ha ocurrido un error en el servidor"));
     }
 
+    const getAllUsers = async () =>{
+        await getAllUsersAPI().then((res) => {
+            setAllUsers(res.data)
+        }).catch(e => toast.warning("Ha ocurrido un error en el servidor al cargar todos los usuarios"))
+    }
+
     return(
-        <UserContext.Provider value={{user, isReady, updateUserData}}>
+        <UserContext.Provider value={{user, isReady, updateUserData, getAllUsers, allUsers}}>
             {children}
         </UserContext.Provider>
     )
