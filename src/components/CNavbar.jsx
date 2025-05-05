@@ -22,7 +22,8 @@ import {
   ChevronDown
 } from "./Icons";
 import React from "react";
-import "../css/navbar.css"
+import "../css/navbar.css";
+import { useUser } from "../context/useUser";
 
 
 export const PHLogo = () => {
@@ -68,6 +69,8 @@ export default function CNavbar() {
     "Editar perfil",
     "Cerrar sesión"
   ];
+
+  const {user} = useUser();
 
   return (
     <Navbar maxWidth="full" className="font-manrope" isBordered={true} isBlurred={true} shouldHideOnScroll={true}>
@@ -121,9 +124,8 @@ export default function CNavbar() {
         dropdownItems={[
           {
             key: "profile_info",
-            description: "yeadcato@gmail.com",
-            startContent: " ",
-            content: <Chip color="success" variant="dot">AdrianCCRS</Chip>,
+            description: user?.email,
+            content: <Chip color="success" variant="dot">{user?.firstName + " " + user?.lastName}</Chip>,
             className: "opacity-100",
           },
           {
