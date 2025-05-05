@@ -24,7 +24,7 @@ import {
 import React from "react";
 export const PHLogo = () => {
   return (
-    <img src="./src/assets/phlogo.svg" alt="logo"/>
+    <img src="../src/assets/phlogo.svg" alt="logo"/>
   );
 };
 
