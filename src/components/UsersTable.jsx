@@ -49,21 +49,16 @@ const programs = [
 ];
 
 
-export default function UsersTable({ usersAPI, addUser }) {
+export default function UsersTable({ addUser, usersForGroup, setUsersForGroup, setModalUsers }) {
   
   const [filterValue, setFilterValue] = React.useState("");
-  const [users, setUsers] = React.useState(usersAPI);
-  useEffect(() => {
-    setUsers(users);
-  }, [users]);
-  const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [programFilter, setprogramFilter] = React.useState("all");
   const [page, setPage] = React.useState(1);
   const hasSearchFilter = Boolean(filterValue);
 
   const filteredItems = React.useMemo(() => {
-    let filteredUsers = [...users];
+    let filteredUsers = [...usersForGroup];
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
@@ -78,7 +73,7 @@ export default function UsersTable({ usersAPI, addUser }) {
     }
 
     return filteredUsers;
-  }, [users, filterValue, programFilter]);
+  }, [usersForGroup, filterValue, programFilter]);
   const pages = Math.ceil(filteredItems.length / rowsPerPage) || 1;
 
   const items = React.useMemo(() => {
@@ -122,7 +117,13 @@ export default function UsersTable({ usersAPI, addUser }) {
             <Tooltip color="danger" content="Eliminar del grupo">
               <span
           className="text-lg text-danger cursor-pointer active:opacity-50"
-          onClick={() => setUsers((prevUsers) => prevUsers.filter((u) => u.id !== user.id))}
+          onClick={() => {
+            setUsersForGroup((prevUsers) => prevUsers.filter((u) => u.id !== user.id));
+            setModalUsers((prevUsers) => {
+              const newUsers = [...prevUsers, user];
+              return newUsers;
+            });
+          }}
               >
           <DeleteIcon size={20} color="currentColor" />
               </span>
@@ -171,7 +172,7 @@ export default function UsersTable({ usersAPI, addUser }) {
         onSearchChange={onSearchChange}
         programFilter={programFilter}
         setProgramFilter={setprogramFilter}
-        usersLength={users.length}
+        usersLength={usersForGroup.length}
         onRowsPerPageChange={onRowsPerPageChange}
         addUser={addUser}
         programs={programs}
@@ -180,11 +181,6 @@ export default function UsersTable({ usersAPI, addUser }) {
   const bottomContent = React.useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
-        <span className="w-[30%] text-small text-default-400">
-          {selectedKeys === "all"
-            ? "All items selected"
-            : `${selectedKeys.size} of ${filteredItems.length} selected`}
-        </span>
         <Pagination
           isCompact
           showControls
@@ -204,7 +200,7 @@ export default function UsersTable({ usersAPI, addUser }) {
         </div>
       </div>
     );
-  }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
+  }, [ items.length, page, pages, hasSearchFilter]);
 
 
   return (
@@ -216,11 +212,9 @@ export default function UsersTable({ usersAPI, addUser }) {
       classNames={{
         wrapper: "max-h-[382px]",
       }}
-      selectedKeys={selectedKeys}
-      selectionMode="multiple"
+      selectionMode="single"
       topContent={topContent}
       topContentPlacement="outside"
-      onSelectionChange={setSelectedKeys}
     >
       <TableHeader columns={columns}>
         {(column) => (
@@ -232,7 +226,7 @@ export default function UsersTable({ usersAPI, addUser }) {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={items}>
+      <TableBody emptyContent={"No se seleccionaron usuarios"} items={items}>
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}

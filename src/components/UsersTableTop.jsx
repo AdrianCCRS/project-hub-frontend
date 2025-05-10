@@ -23,8 +23,7 @@ function UsersTableTop({
   usersLength,
   onRowsPerPageChange,
   programs,
-  addUser
-}) {
+  addUser,}) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between gap-3 items-end">

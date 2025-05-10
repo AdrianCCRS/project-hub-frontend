@@ -4,7 +4,8 @@ import UsersTableTop from "./UsersTableTop";
 import { PlusIcon, EditIcon } from "./Icons";
 import { useEffect } from "react";
 import SelectedUsersTableModal from "./SelectedUsersTableModal";
-
+import { useUser } from "../context/useUser";
+import { set } from "react-hook-form";
 export const columns = [
     { name: "NOMBRE", uid: "firstName" },
     {name: "APELLIDO", uid: "lastName"},
@@ -39,13 +40,20 @@ export const columns = [
   ];
   
 
-function AddUserModal({ isOpen, onOpenChange, onOpen, usersAPI }) {
+function AddUserModal({ isOpen, onOpenChange, onOpen, modalUsers, setModalUsers, setUsersForGroup }) {
+  const { getAllUsers, allUsers } = useUser();
+
+  useEffect(() => {
+        getAllUsers();
+    }, []);
+
+    useEffect(() => {
+        if (allUsers && allUsers.length > 0) {
+            setModalUsers(allUsers); 
+        }
+    }, [allUsers]);
 
   const [filterValue, setFilterValue] = React.useState("");
-  const [users, setUsers] = React.useState(usersAPI);
-  useEffect(() => {
-    setUsers(users);
-  }, [users]);
   const [selectedUsers, setSelectedUsers] = React.useState([]);
 
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -54,7 +62,7 @@ function AddUserModal({ isOpen, onOpenChange, onOpen, usersAPI }) {
   const hasSearchFilter = Boolean(filterValue);
 
   const filteredItems = React.useMemo(() => {
-    let filteredUsers = [...users];
+    let filteredUsers = [...modalUsers];
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
@@ -69,7 +77,7 @@ function AddUserModal({ isOpen, onOpenChange, onOpen, usersAPI }) {
     }
 
     return filteredUsers;
-  }, [users, filterValue, programFilter]);
+  }, [modalUsers, filterValue, programFilter]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage) || 1;
 
@@ -158,7 +166,7 @@ function AddUserModal({ isOpen, onOpenChange, onOpen, usersAPI }) {
   }, []);
 
   const handleUserAdd = React.useCallback((user) => {
-    setUsers((prevUsers) => prevUsers.filter((u) => u.id !== user.id));   
+    setModalUsers((prevUsers) => prevUsers.filter((u) => u.id !== user.id));   
     setSelectedUsers((prevSelectedUsers) => [
       ...prevSelectedUsers,
       user
@@ -171,7 +179,7 @@ function AddUserModal({ isOpen, onOpenChange, onOpen, usersAPI }) {
         onSearchChange={onSearchChange}
         programFilter={programFilter}
         setProgramFilter={setprogramFilter}
-        usersLength={users.length}
+        usersLength={modalUsers.length}
         onRowsPerPageChange={onRowsPerPageChange}
         programs={programs}
       />;
@@ -233,7 +241,7 @@ function AddUserModal({ isOpen, onOpenChange, onOpen, usersAPI }) {
                         </TableColumn>
                         )}
                     </TableHeader>
-                    <TableBody emptyContent={"No users found"} items={items}>
+                    <TableBody emptyContent={"No se encontraron usuarios"} items={items}>
                         {(item) => (
                         <TableRow key={item.id}>
                             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
@@ -244,7 +252,7 @@ function AddUserModal({ isOpen, onOpenChange, onOpen, usersAPI }) {
                 <Chip color="primary" variant="faded" size="lg">Usuarios Seleccionados</Chip>
                 <SelectedUsersTableModal 
                     items={selectedUsers}
-                    setUsers={setUsers}
+                    setUsers={setModalUsers}
                     setSelectedUsers={setSelectedUsers}
                     columns={columns}
                     onNextPage={onNextPage}
@@ -253,10 +261,24 @@ function AddUserModal({ isOpen, onOpenChange, onOpen, usersAPI }) {
                     programs={programs}/>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="danger" variant="flat" onPress={onClose}>
+                    <Button color="danger" variant="flat" onPress={() => {
+                        onClose();
+                        setModalUsers((prevUsers) => {
+                            const newUsers = [...prevUsers, ...selectedUsers];
+                            return newUsers;
+                        });
+                        setSelectedUsers([]);
+                    }}>
                     Cancelar
                     </Button>
-                    <Button color="primary" onPress={onClose}>
+                    <Button color="primary" onPress={() => {
+                        onClose();
+                        setUsersForGroup((prevSelectedUsers) => {
+                            const newUsers = [...prevSelectedUsers, ...selectedUsers];
+                            return newUsers;
+                        });
+                        setSelectedUsers([]);
+                    }}>
                     Añadir
                     </Button>
                 </ModalFooter>

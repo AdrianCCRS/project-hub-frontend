@@ -3,25 +3,13 @@ import { HeroUIProvider, Card, Form, Input, Button, Autocomplete, AutocompleteIt
 import { ShowPassword, HiddenPassword } from "../../components/Icons";
 import CNavbar from "../../components/CNavbar";
 import UsersTable from "../../components/UsersTable";
-import { useUser } from "../../context/useUser";
 import AddUserModal from "../../components/AddUserModal";
+
 function CreateGroup() {
     const [isVisible, setIsVisible] = React.useState(false);
-    const { getAllUsers, allUsers } = useUser();
-    const [users, setUsers] = useState([]);
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
-
-    useEffect(() => {
-        // Cargar los usuarios
-        getAllUsers();
-    }, []);
-
-    useEffect(() => {
-        // Verifica si allUsers ya tiene datos y actualiza el estado de users
-        if (allUsers && allUsers.length > 0) {
-            setUsers(allUsers);  // Asigna los usuarios cargados al estado
-        }
-    }, [allUsers]);  // Ejecutar cuando allUsers cambia
+    const [usersForGroup, setUsersForGroup] = useState([]);
+    const [modalUsers, setModalUsers] = React.useState([]);
 
     const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -49,13 +37,10 @@ function CreateGroup() {
                             placeholder="Escriba un nombre para el grupo"
                             type="text"
                         />
-                        
-                        {users.length > 0 ? (
-                            <UsersTable usersAPI={users} addUser={<AddUserModal isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange}/>}/> 
+                    
+                            <UsersTable setUsersForGroup={setUsersForGroup} setModalUsers={setModalUsers} usersForGroup={usersForGroup} addUser={<AddUserModal modalUsers={modalUsers} setModalUsers={setModalUsers} setUsersForGroup={setUsersForGroup} isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange}/>}/> 
                             
-                        ) : (
-                            <div>Loading users...</div>  
-                        )}
+                    
                         
 
                         <Autocomplete
