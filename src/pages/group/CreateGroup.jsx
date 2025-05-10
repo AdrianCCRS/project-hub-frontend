@@ -1,17 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { HeroUIProvider, Card, Form, Input, Button, Autocomplete, AutocompleteItem, Textarea, Chip, Image, useDisclosure } from "@heroui/react";
-import { ShowPassword, HiddenPassword } from "../../components/Icons";
+import React, { useState } from "react";
+import { HeroUIProvider, Card, Form, Input, Button, Chip, Image, useDisclosure } from "@heroui/react";
 import CNavbar from "../../components/CNavbar";
 import UsersTable from "../../components/UsersTable";
 import AddUserModal from "../../components/AddUserModal";
+import {createGroupAPI, addMembersAPI} from "../../services/GroupService";
+import { toast } from "react-toastify";
 
 function CreateGroup() {
-    const [isVisible, setIsVisible] = React.useState(false);
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const [usersForGroup, setUsersForGroup] = useState([]);
     const [modalUsers, setModalUsers] = React.useState([]);
 
-    const toggleVisibility = () => setIsVisible(!isVisible);
+
+    const sendGroup = async (group) => {
+        await createGroupAPI(group.groupName, group.groupLeaderId).then((res) => {
+            if (res) {
+                addMembersAPI(usersForGroup.map((user) => ({ groupId: res.data.id, userId: user.id })));
+            }}).then(() => {
+                toast.success("Grupo creado con exito");
+                setUsersForGroup([]);
+                setModalUsers([]);
+            }).catch(e => toast.warning("Ha ocurrido un error en el servidor"));}
 
     return (
         <HeroUIProvider className="overflow-x-hidden overflow-y-auto h-screen ">
@@ -20,11 +29,14 @@ function CreateGroup() {
                 <Card className="w-auto p-6 shadow-md rounded-lg flex flex-row">
                     <Form
                         className="w-auto flex flex-col gap-4 font-worksans"
-                        onReset={() => setAction("reset")}
                         onSubmit={(e) => {
                             e.preventDefault();
-                            let data = Object.fromEntries(new FormData(e.currentTarget));
-                            setAction(`submit ${JSON.stringify(data)}`);
+                            const group = {
+                                groupName: e.currentTarget.groupName.value,
+                                groupLeaderId: localStorage.getItem("userId"),
+                            }
+                            sendGroup(group);
+                            e.currentTarget.reset();
                         }}
                     >
                         <Chip className="w-full font-manrope text-xl text-center" color="success">Crear un nuevo grupo</Chip>
@@ -40,68 +52,29 @@ function CreateGroup() {
                     
                             <UsersTable setUsersForGroup={setUsersForGroup} setModalUsers={setModalUsers} usersForGroup={usersForGroup} addUser={<AddUserModal modalUsers={modalUsers} setModalUsers={setModalUsers} setUsersForGroup={setUsersForGroup} isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange}/>}/> 
                             
-                    
-                        
-
-                        <Autocomplete
-                            className="w-full"
-                            defaultItems={[]}
-                            label="Cambiar el programa"
-                            placeholder="Cambia tu programa"
-                        >
-                            {(program) => (
-                                <AutocompleteItem key={program.id}>
-                                    {program.name}
-                                </AutocompleteItem>
-                            )}
-                        </Autocomplete>
-
-                        <Input
-                            className="w-full"
-                            endContent={
-                                <button
-                                    aria-label="toggle password visibility"
-                                    className="focus:outline-none"
-                                    type="button"
-                                    onClick={toggleVisibility}
-                                >
-                                    {isVisible ? (
-                                        <ShowPassword className="text-2xl text-default-400 pointer-events-none" />
-                                    ) : (
-                                        <HiddenPassword className="text-2xl text-default-400 pointer-events-none" />
-                                    )}
-                                </button>
-                            }
-                            label="Contraseña"
-                            placeholder="Ingrese su contraseña"
-                            type={isVisible ? "text" : "password"}
-                        />
-
-                        <Textarea
-                            isRequired
-                            className="w-full"
-                            label="Description"
-                            labelPlacement="outside"
-                            placeholder="Enter your description"
-                        />
-
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 align-center justify-center w-full">
                             <Button color="success" type="submit">
-                                Actualizar
+                                Crear Grupo
                             </Button>
-                            <Button type="reset" variant="flat">
+                            <Button color="danger" type="reset" variant="flat" onPress={() => {
+                                setModalUsers((prevUsers) => {
+                                    const newUsers = [...prevUsers, ...usersForGroup];
+                                    return newUsers;
+                                  });
+                                setUsersForGroup([]);
+                            }}>
                                 Borrar todo
                             </Button>
                         </div>
                     </Form>
                 
-                    <div className=" flex-col items-center justify-center self-center hidden md:flex">
+                    <div className="m-5 flex-col items-center justify-center self-center hidden md:flex">
                         <Image
                             isBlurred
                             alt="Babillito Writing"
                             className="m-5"
-                            src="./src/assets/babillito/babillito_writing.png"
-                            width={240}
+                            src="/src/assets/babillito/babillito_groups.png"
+                            width={300}
                         />
                     </div>
                 </Card>
