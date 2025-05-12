@@ -5,7 +5,7 @@ import { PlusIcon, EditIcon } from "./Icons";
 import { useEffect } from "react";
 import SelectedUsersTableModal from "./SelectedUsersTableModal";
 import { useUser } from "../context/useUser";
-import { set } from "react-hook-form";
+import {toast} from "react-toastify";
 export const columns = [
     { name: "NOMBRE", uid: "firstName" },
     {name: "APELLIDO", uid: "lastName"},
@@ -40,7 +40,7 @@ export const columns = [
   ];
   
 
-function AddUserModal({ isOpen, onOpenChange, onOpen, modalUsers, setModalUsers, setUsersForGroup }) {
+function AddUserModal({ isOpen, onOpenChange, onOpen, modalUsers, setModalUsers, setUsersForGroup, usersForGroup }) {
   const { getAllUsers, allUsers } = useUser();
 
   useEffect(() => {
@@ -165,6 +165,19 @@ function AddUserModal({ isOpen, onOpenChange, onOpen, modalUsers, setModalUsers,
     setPage(1);
   }, []);
 
+  const handleAddUsersToGroup = (selectedUsers) => {
+    const filteredUsers = selectedUsers.filter(newUser => 
+        !usersForGroup.some(user => user.id === newUser.id)
+    );
+
+    if (filteredUsers.length > 0) {
+        setUsersForGroup((prevSelectedUsers) => [...prevSelectedUsers, ...filteredUsers]);
+        setSelectedUsers([]);
+    } else {
+        toast.warning("Todos los usuarios escogidos ya están preseleccionados.");
+    }
+};
+
   const handleUserAdd = React.useCallback((user) => {
     setModalUsers((prevUsers) => prevUsers.filter((u) => u.id !== user.id));   
     setSelectedUsers((prevSelectedUsers) => [
@@ -273,11 +286,7 @@ function AddUserModal({ isOpen, onOpenChange, onOpen, modalUsers, setModalUsers,
                     </Button>
                     <Button color="primary" onPress={() => {
                         onClose();
-                        setUsersForGroup((prevSelectedUsers) => {
-                            const newUsers = [...prevSelectedUsers, ...selectedUsers];
-                            return newUsers;
-                        });
-                        setSelectedUsers([]);
+                        handleAddUsersToGroup(selectedUsers);
                     }}>
                     Añadir
                     </Button>
