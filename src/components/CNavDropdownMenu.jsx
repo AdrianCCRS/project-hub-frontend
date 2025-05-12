@@ -44,6 +44,7 @@ export function CNavDropdownMenu({icon,dropdownItems, btnVariant="ghost", ...pro
                 startContent={item.startContent}
                 color={item.color || ""}
                 className={item.className || ""}
+                href={item.href || ""}
                 >
                     {item.content}
                 </DropdownItem>
