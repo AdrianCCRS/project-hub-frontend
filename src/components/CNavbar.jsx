@@ -7,7 +7,8 @@ import {
   Chip,
   NavbarMenuItem,
   NavbarMenuToggle,
-  NavbarMenu
+  NavbarMenu,
+  link
 } from "@heroui/react";
 import { CNavDropdownMenu } from "./CNavDropdownMenu";
 import { 
@@ -24,6 +25,7 @@ import {
 import React from "react";
 import "../css/navbar.css";
 import { useUser } from "../context/useUser";
+import { href } from "react-router-dom";
 
 
 export const PHLogo = () => {
@@ -76,7 +78,7 @@ export default function CNavbar() {
     <Navbar maxWidth="full" className="font-manrope" isBordered={true} isBlurred={true} shouldHideOnScroll={true}>
       <NavbarBrand>
         <PHLogo />
-        <Link color="foreground" href="#"  className="font-bold text-xl ml-4">Dashboard</Link>
+        <Link color="foreground" href="/projects"  className="font-bold text-xl ml-4">Dashboard</Link>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="end">
         <CNavDropdownMenu
@@ -100,12 +102,14 @@ export default function CNavbar() {
               key: "edit_project",
               description: "Edita un proyecto existente",
               startContent: icons.edit_project,
+              href: "/projects/edit",
               content: "Editar un proyecto",
             },
             {
               key: "edit_group",
               description: "Edita un grupo de trabajo existente",
               startContent: icons.edit_group,
+              href: "/group/edit",
               content: "Editar un grupo",
             }
           ]}
@@ -133,6 +137,7 @@ export default function CNavbar() {
             description: "Edita tu perfil",
             startContent: icons.profile,
             content: "Editar perfil",
+            href: "/profile/edit",
           },
           {
             key: "logout",
