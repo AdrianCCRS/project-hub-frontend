@@ -12,14 +12,14 @@ import {
 import { CNavDropdownMenu } from "./CNavDropdownMenu";
 import { 
   CreateProject,
-  CreateGroup,
-  Edit,
+  CreateGroupIcon,
   Add,
-  EditProject,
-  EditGroup,
+  EditProjectIcon,
+  EditGroupIcon,
   ProfileIcon,
   LogoutIcon,
-  ChevronDown
+  ChevronDown,
+  EditIcon
 } from "./Icons";
 import React from "react";
 import "../css/navbar.css";
@@ -36,13 +36,13 @@ export default function CNavbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const icons = {
     create_project: <CreateProject fill="currentColor" size={30} />,
-    edit_project: <EditProject fill="currentColor" size={30} />,
-    create_group: <CreateGroup fill="currentColor" size={40} />,
-    edit_group: <EditGroup fill="currentColor" size={30} />,
+    edit_project: <EditProjectIcon fill="currentColor" size={30} />,
+    create_group: <CreateGroupIcon fill="currentColor" size={40} />,
+    edit_group: <EditGroupIcon fill="currentColor" size={30} />,
     profile: <ProfileIcon fill="currentColor" size={35} />,
     logout: <LogoutIcon fill="currentColor" size={35} />,
     chevron: <ChevronDown fill="currentColor" size={16} />,
-    edit: <Edit fill="currentColor" size={20} />,
+    edit: <EditIcon fill="currentColor" size={20} />,
     add: <Add fill="currentColor" size={20} />,
   };
 
