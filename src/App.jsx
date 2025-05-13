@@ -7,6 +7,7 @@ import Landing from './pages/Landing';
 import EditProfile from './pages/EditProfile';
 import CreateGroup from './pages/group/CreateGroup';
 import EditGroup  from './pages/group/EditGroup';
+import CreateProject from './pages/project/CreateProject';
 
 import { ToastContainer } from 'react-toastify';
 import { AuthProvider } from './context/useAuth';
@@ -55,6 +56,14 @@ export default function App() {
                       <EditGroup />
                     </UserContextProvider>
                   </PrivateRoute>}
+                />
+                <Route path='/project/create' element={
+                    <PrivateRoute>
+                        <UserContextProvider>
+                            <CreateProject />
+                        </UserContextProvider>
+                    </PrivateRoute>
+                }
                 />
 
                 
