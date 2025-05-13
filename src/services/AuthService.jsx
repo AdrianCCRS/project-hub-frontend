@@ -28,3 +28,9 @@ export const registerAPI = async (firstName, lastName, email, password, program,
         handleError(error);
     }
 }
+
+export const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    window.location.href = "/login";
+}
