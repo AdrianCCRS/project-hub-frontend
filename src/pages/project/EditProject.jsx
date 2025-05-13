@@ -24,18 +24,19 @@ function EditProject() {
     const [selectedState, setSelectedState] = useState(null);
     const [enabledInput, setEnabledInput] = useState(true);
     const [selectedGroup, setSelectedGroup] = useState(null);
+    const [originalGroup, setOriginalGroup] = useState(null);
     const [project, setProject] = useState(null);
     useEffect(() => {
         getGroupsByLeaderAPI(localStorage.getItem("userId")).then((res) => {setGroups(res.data)});
         }, []);
     useEffect(() => {
-        if (selectedGroup) {
+        if (originalGroup) {
             setEnabledInput(false);
-            getProjectsByGroupAPI(selectedGroup).then((res) => {
+            getProjectsByGroupAPI(originalGroup).then((res) => {
                 setProjects(res.data);
             });
         }
-    }, [selectedGroup]);
+    }, [originalGroup]);
     useEffect(() => {
         if (selectedProjectId) {
             const projectToSet = projects.find((project) => project.id == selectedProjectId);
@@ -89,6 +90,7 @@ function EditProject() {
                 placeholder="Elige un nuevo grupo"
                 name="selectedGroupForProject"
                 selectedKey={selectedGroup}
+                onSelectionChange={setSelectedGroup}
             >
                 {(group) => (
                     <AutocompleteItem key={group.id}>
@@ -117,7 +119,7 @@ function EditProject() {
             </Select>
         </>
     );
-}
+    }
 
     const updateProject = async (project) => {
         await updateProjectAPI(project).then((res) => {
@@ -145,7 +147,7 @@ function EditProject() {
                             }
                             updateProject(project);
                             setProject(null);
-                            setSelectedGroup(null);
+                            setOriginalGroup(null);
                             setSelectedProjectId(null);
                         }}
                     >
@@ -156,8 +158,8 @@ function EditProject() {
                             label="Elegir el grupo que tiene el proyecto"
                             placeholder="Elige un grupo"
                             name="groupOfProject"
-                            selectedKey={selectedGroup}
-                            onSelectionChange={setSelectedGroup}
+                            selectedKey={originalGroup}
+                            onSelectionChange={setOriginalGroup}
                         >
                             {(group) => (
                                 <AutocompleteItem key={group.id}>
