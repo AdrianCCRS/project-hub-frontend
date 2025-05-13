@@ -47,7 +47,7 @@ function CreateProject() {
                             const project = {
                                 title: e.currentTarget.projectTitle.value,
                                 description: e.currentTarget.description.value,
-                                reposLink: e.currentTarget.repoLink.value,
+                                repoLink: e.currentTarget.repoLink.value,
                                 groupId: selectedGroup,
                                 status: e.currentTarget.projectState.value,
                             }
