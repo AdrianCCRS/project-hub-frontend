@@ -34,3 +34,11 @@ export const updateProjectAPI = async (project) => {
         handleError(error);
     }
 }
+
+export const getProjectsByGroupAPI = async (groupId) => {
+    try {
+        return  await api.get("/api/projects/group/" + groupId);
+    } catch (error){
+        handleError(error);
+    }
+}
