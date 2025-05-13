@@ -18,3 +18,19 @@ export const getProjectByUserIdAPI = async (userId) => {
         handleError(error);
     } 
 }
+
+export const createProjectAPI = async (project) => {
+    try {
+        return await api.post("/api/projects", project);
+    } catch (error){
+        handleError(error);
+    }
+}
+
+export const updateProjectAPI = async (project) => {
+    try {
+        return await api.put("/api/projects", project);
+    } catch (error){
+        handleError(error);
+    }
+}
