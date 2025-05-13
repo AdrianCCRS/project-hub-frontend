@@ -8,7 +8,6 @@ import {
   NavbarMenuItem,
   NavbarMenuToggle,
   NavbarMenu,
-  link
 } from "@heroui/react";
 import { CNavDropdownMenu } from "./CNavDropdownMenu";
 import { 
@@ -25,7 +24,7 @@ import {
 import React from "react";
 import "../css/navbar.css";
 import { useUser } from "../context/useUser";
-import { href } from "react-router-dom";
+import {logout} from "../services/AuthService.jsx";
 
 
 export const PHLogo = () => {
@@ -54,12 +53,14 @@ export default function CNavbar() {
       description: "Crea un nuevo proyecto para compartir con la comunidad y trabajar juntos",
       startContent: icons.create_project,
       content: "Crear un nuevo proyecto",
+      href: "/project/create",
     },
     {
       key: "create_group",
       description: "Crea un nuevo grupo de trabajo para uno de tus proyectos",
       startContent: icons.create_group,
       content: "Crear un nuevo grupo",
+      href: "/group/create",
     }
   ];
 
@@ -102,7 +103,7 @@ export default function CNavbar() {
               key: "edit_project",
               description: "Edita un proyecto existente",
               startContent: icons.edit_project,
-              href: "/projects/edit",
+              href: "/project/edit",
               content: "Editar un proyecto",
             },
             {
@@ -145,6 +146,7 @@ export default function CNavbar() {
             startContent: icons.logout,
             content: "Cerrar sesión",
             color:"danger",
+            onPress: { l: logout}
           }
         ]}
         >
