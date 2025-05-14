@@ -79,13 +79,15 @@ function EditGroup() {
                                     </AutocompleteItem>
                                 )}
                             </Autocomplete>
-                            <Input
-                                className="w-full"
-                                name="groupName"
-                                label="Nombre del grupo"
-                                placeholder="Escribe un nuevo nombre para el grupo"
-                                required
-                            />
+                        {selectedGroup ? <Input
+                            className="w-full"
+                            name="groupName"
+                            label="Nombre del grupo"
+                            placeholder="Escribe un nuevo nombre para el grupo"
+                            defaultValue={selectedGroup ? groups.find((group) => group.id == selectedGroup).name : ""}
+                            required
+                        /> : ""}
+
                             <div>
                             <Chip color="primary" variant="faded" className="my-4">Seleccionar usuarios</Chip>
                             <UsersTable setUsersForGroup={setUsersForGroup} setModalUsers={setModalUsers} usersForGroup={usersForGroup} addUser={<AddUserModal usersForGroup={usersForGroup} modalUsers={modalUsers} setModalUsers={setModalUsers} setUsersForGroup={setUsersForGroup} isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange}/>}/> 
