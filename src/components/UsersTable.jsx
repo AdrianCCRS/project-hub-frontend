@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  Pagination,
   Button,
   Chip,
+  Pagination,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
   Tooltip,
 } from "@heroui/react";
 
-import { EditIcon, DeleteIcon } from "./Icons";
+import {DeleteIcon, EditIcon} from "./Icons";
 import UsersTableTop from "./UsersTableTop";
 
 export const columns = [
@@ -49,7 +49,7 @@ const programs = [
 ];
 
 
-export default function UsersTable({ addUser, usersForGroup, setUsersForGroup, setModalUsers }) {
+export default function UsersTable({ addUser, usersForGroup, setUsersForGroup, setModalUsers, setDeletedUsers }) {
   
   const [filterValue, setFilterValue] = React.useState("");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -119,10 +119,8 @@ export default function UsersTable({ addUser, usersForGroup, setUsersForGroup, s
           className="text-lg text-danger cursor-pointer active:opacity-50"
           onClick={() => {
             setUsersForGroup((prevUsers) => prevUsers.filter((u) => u.id !== user.id));
-            setModalUsers((prevUsers) => {
-              const newUsers = [...prevUsers, user];
-              return newUsers;
-            });
+            setModalUsers((prevUsers) => [...prevUsers, user]);
+            setDeletedUsers((prevUsers) => [...prevUsers, user]);
           }}
               >
           <DeleteIcon size={20} color="currentColor" />
@@ -192,10 +190,10 @@ export default function UsersTable({ addUser, usersForGroup, setUsersForGroup, s
         />
         <div className="hidden sm:flex w-[30%] justify-end gap-2">
           <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
-            Previous
+            Atrás
           </Button>
           <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
-            Next
+            Siguiente
           </Button>
         </div>
       </div>
