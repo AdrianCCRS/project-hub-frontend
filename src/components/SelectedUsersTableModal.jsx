@@ -2,7 +2,6 @@ import React from "react";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination } from "@heroui/react";
 import { Button, Chip, Tooltip,  } from "@heroui/react";
 import { CancelIcon, EditIcon} from "./Icons";
-import { set } from "react-hook-form";
 
 function SelectedUsersTableModal({items, setSelectedUsers, setUsers,columns, onNextPage, onPreviousPage, programs, programColorMap}){
     const [page, setPage] = React.useState(1);
@@ -23,10 +22,10 @@ function SelectedUsersTableModal({items, setSelectedUsers, setUsers,columns, onN
             />
             <div className="hidden sm:flex w-[30%] justify-end gap-2">
               <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
-                Previous
+                Atrás
               </Button>
               <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
-                Next
+                Siguiente
               </Button>
             </div>
           </div>
