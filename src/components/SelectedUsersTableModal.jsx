@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination } from "@heroui/react";
 import { Button, Chip, Tooltip,  } from "@heroui/react";
-import { CancelIcon, EditIcon} from "./Icons";
+import { CancelIcon} from "./Icons";
 
 function SelectedUsersTableModal({items, setSelectedUsers, setUsers,columns, onNextPage, onPreviousPage, programs, programColorMap}){
     const [page, setPage] = React.useState(1);

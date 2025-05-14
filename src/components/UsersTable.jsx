@@ -12,7 +12,7 @@ import {
   Tooltip,
 } from "@heroui/react";
 
-import {DeleteIcon, EditIcon} from "./Icons";
+import {DeleteIcon} from "./Icons";
 import UsersTableTop from "./UsersTableTop";
 
 export const columns = [
@@ -108,12 +108,7 @@ export default function UsersTable({ addUser, usersForGroup, setUsersForGroup, s
         );
       case "actions":
         return (
-          <div className="relative flex items-center gap-2">
-            <Tooltip content="Visitar perfil">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-          <EditIcon size={20} color="currentColor" />
-              </span>
-            </Tooltip>
+          <div className="relative flex items-center justify-center">
             <Tooltip color="danger" content="Eliminar del grupo">
               <span
           className="text-lg text-danger cursor-pointer active:opacity-50"
