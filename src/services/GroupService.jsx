@@ -1,4 +1,4 @@
-import { handleError } from "../helpers/ErrorHandler";
+import {handleError} from "../helpers/ErrorHandler";
 import {api} from "./axiosConfig";
 
 export const createGroupAPI = async (name, leaderId) => {
@@ -24,12 +24,11 @@ export const addMembersAPI = async (members) => {
 
 export const updateGroupAPI = async (name, leaderId, id) => {
     try {
-        const data = await api.put("/api/groups", {
+        return await api.put("/api/groups", {
             name: name,
             leaderId: leaderId,
             id: id
         });
-        return data;
     } catch (error){
         handleError(error);
     }
@@ -37,8 +36,7 @@ export const updateGroupAPI = async (name, leaderId, id) => {
 
 export const getGroupsByLeaderAPI = async (leaderId) => {
     try {
-        const data = await api.get(`/api/groups/editable/${leaderId}`);
-        return data;
+        return await api.get(`/api/groups/editable/${leaderId}`);
     } catch (error){
         handleError(error);
     }
@@ -46,9 +44,18 @@ export const getGroupsByLeaderAPI = async (leaderId) => {
 
 export const getMembersFromGroupAPI = async (groupId) => {
     try {
-        const data = await api.get(`/api/group-members/group/${groupId}`);
-        return data;
+        return await api.get(`/api/group-members/group/${groupId}`);
     } catch (error){
         handleError(error);
     }
 }
+
+export const deleteMembersAPI = async (members, groupId) => {
+    try {
+        return await api.delete(`/api/group-members/deleteMultiple/group/${groupId}`, {
+            data: members
+        });
+    } catch (error) {
+        handleError(error);
+    }
+};
