@@ -6,41 +6,9 @@ import { useEffect } from "react";
 import SelectedUsersTableModal from "./SelectedUsersTableModal";
 import { useUser } from "../context/useUser";
 import {toast} from "react-toastify";
-export const columns = [
-    { name: "NOMBRE", uid: "firstName" },
-    {name: "APELLIDO", uid: "lastName"},
-    { name: "CORREO", uid: "email" },
-    { name: "CARRERA", uid: "program" },
-    { name: "ACCIONES", uid: "actions" },
-  ];
-  
-  const programColorMap = {
-    ing_bio: "success",
-    ing_amb: "success",
-    ing_qui: "success",
-    ing_pet: "success",
-    ing_sis: "warning",
-    ing_mec: "warning",
-    ing_civ: "warning",
-    ing_ind: "warning",
-    ing_ele: "warning",
-  };
-  
-  const programs = [
-    { uid: "ing_sis", name: "Ingeniería de Sistemas" },
-    { uid: "ing_pet", name: "Ingeniería de Petróleos" },
-    { uid: "ing_ind", name: "Ingeniería Industrial" },
-    { uid: "ing_qui", name: "Ingeniería Química" },
-    { uid: "ing_ele", name: "Ingeniería Electrónica" },
-    { uid: "ing_mec", name: "Ingeniería Mecánica" },
-    { uid: "ing_civ", name: "Ingeniería Civil" },
-    { uid: "ing_amb", name: "Ingeniería Ambiental" },
-    { uid: "ing_bio", name: "Ingeniería Biomédica" },
-    { uid: "ing_ene", name: "Ingeniería Eléctrica" },
-  ];
-  
+import {COLUMNS_FOR_USERS_TABLE, PROGRAM_COLOR_MAP, PROGRAMS} from "../config/constants.js";
 
-function AddUserModal({ isOpen, onOpenChange, onOpen, modalUsers, setModalUsers, setUsersForGroup, usersForGroup }) {
+function AddUserModal({ selectedGroup, isOpen, onOpenChange, onOpen, modalUsers, setModalUsers, setUsersForGroup, usersForGroup }) {
   const { getAllUsers, allUsers } = useUser();
 
   useEffect(() => {
@@ -57,7 +25,7 @@ function AddUserModal({ isOpen, onOpenChange, onOpen, modalUsers, setModalUsers,
   const [selectedUsers, setSelectedUsers] = React.useState([]);
 
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [programFilter, setprogramFilter] = React.useState("all");
+  const [programFilter, setProgramFilter] = React.useState("all");
   const [page, setPage] = React.useState(1);
   const hasSearchFilter = Boolean(filterValue);
 
@@ -70,7 +38,7 @@ function AddUserModal({ isOpen, onOpenChange, onOpen, modalUsers, setModalUsers,
         user.lastName.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
-    if (programFilter !== "all" && Array.from(programFilter).length !== programs.length) {
+    if (programFilter !== "all" && Array.from(programFilter).length !== PROGRAMS.length) {
       filteredUsers = filteredUsers.filter((user) =>
         Array.from(programFilter).includes(user.program),
       );
@@ -104,7 +72,7 @@ function AddUserModal({ isOpen, onOpenChange, onOpen, modalUsers, setModalUsers,
         return (
           <Chip
             className="capitalize"
-            color={programColorMap[programs.find((program) => program.name === user.program)?.uid]}
+            color={PROGRAM_COLOR_MAP[PROGRAMS.find((program) => program.name === user.program)?.uid]}
             size="sm"
             variant="flat"
           >
@@ -191,10 +159,10 @@ function AddUserModal({ isOpen, onOpenChange, onOpen, modalUsers, setModalUsers,
         onClear={onClear}
         onSearchChange={onSearchChange}
         programFilter={programFilter}
-        setProgramFilter={setprogramFilter}
+        setProgramFilter={setProgramFilter}
         usersLength={modalUsers.length}
         onRowsPerPageChange={onRowsPerPageChange}
-        programs={programs}
+        programs={PROGRAMS}
       />;
     
   const bottomContent = React.useMemo(() => {
@@ -211,10 +179,10 @@ function AddUserModal({ isOpen, onOpenChange, onOpen, modalUsers, setModalUsers,
         />
         <div className="hidden sm:flex w-[30%] justify-end gap-2">
           <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
-            Previous
+            Atrás
           </Button>
           <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
-            Next
+            Siguiente
           </Button>
         </div>
       </div>
@@ -244,7 +212,7 @@ function AddUserModal({ isOpen, onOpenChange, onOpen, modalUsers, setModalUsers,
                     topContent={topContent}
                     topContentPlacement="outside"
                     >
-                    <TableHeader columns={columns}>
+                    <TableHeader columns={COLUMNS_FOR_USERS_TABLE}>
                         {(column) => (
                         <TableColumn
                             key={column.uid}
@@ -267,11 +235,11 @@ function AddUserModal({ isOpen, onOpenChange, onOpen, modalUsers, setModalUsers,
                     items={selectedUsers}
                     setUsers={setModalUsers}
                     setSelectedUsers={setSelectedUsers}
-                    columns={columns}
+                    columns={COLUMNS_FOR_USERS_TABLE}
                     onNextPage={onNextPage}
                     onPreviousPage={onPreviousPage}
-                    programColorMap={programColorMap}
-                    programs={programs}/>
+                    programColorMap={PROGRAM_COLOR_MAP}
+                    programs={PROGRAMS}/>
                 </ModalBody>
                 <ModalFooter>
                     <Button color="danger" variant="flat" onPress={() => {
