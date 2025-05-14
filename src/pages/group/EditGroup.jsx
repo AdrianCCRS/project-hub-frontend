@@ -1,17 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { HeroUIProvider, Card, Form, Autocomplete, AutocompleteItem, Button, Chip, Image, useDisclosure, Input } from "@heroui/react";
+import {
+    HeroUIProvider,
+    Card,
+    Form,
+    Autocomplete,
+    AutocompleteItem,
+    Button,
+    Chip,
+    Image,
+    useDisclosure,
+    Input,
+} from "@heroui/react";
 import CNavbar from "../../components/CNavbar";
 import UsersTable from "../../components/UsersTable";
 import AddUserModal from "../../components/AddUserModal";
-import {createGroupAPI, addMembersAPI, getGroupsByLeaderAPI, getMembersFromGroupAPI, updateGroupAPI} from "../../services/GroupService";
+import {
+    addMembersAPI,
+    getGroupsByLeaderAPI,
+    getMembersFromGroupAPI,
+    updateGroupAPI,
+    deleteMembersAPI
+} from "../../services/GroupService";
 import { toast } from "react-toastify";
+import DeletedUsersTable from "../../components/DeletedUsersTable.jsx";
+import {useUser} from "../../context/useUser.jsx";
+import {COLUMNS_FOR_USERS_TABLE, PROGRAM_COLOR_MAP, PROGRAMS} from "../../config/constants.js";
 
 function EditGroup() {
+    const {getAllUsers} = useUser();
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const [usersForGroup, setUsersForGroup] = useState([]);
+    const [deletedUsers, setDeletedUsers] = useState([]);
     const [modalUsers, setModalUsers] = React.useState([]);
     const [groups, setGroups] = useState([]);
     const [selectedGroup, setSelectedGroup] = useState(null);
+
     useEffect(() => {
         getGroupsByLeaderAPI(localStorage.getItem("userId")).then((res) => {
             if (res) {
@@ -32,12 +55,17 @@ function EditGroup() {
         await updateGroupAPI(group.groupName, group.groupLeaderId, selectedGroup).then((res) => {
             if (res) {
                 addMembersAPI(usersForGroup.map((user) => ({ groupId: selectedGroup, userId: user.id })));
+                if (deletedUsers.length > 0) {
+                    deleteMembersAPI(deletedUsers.map((user) => ({ groupId: selectedGroup, userId: user.id })), selectedGroup);
+                }
             }}
         ).then(() => {
             toast.success("Grupo actualizado con exito");
             setUsersForGroup([]);
             setModalUsers([]);
             setSelectedGroup(null);
+            setDeletedUsers([]);
+            getAllUsers();
             getGroupsByLeaderAPI(localStorage.getItem("userId")).then((res) => {
                 if (res) {
                     setGroups(res.data)
@@ -79,20 +107,50 @@ function EditGroup() {
                                     </AutocompleteItem>
                                 )}
                             </Autocomplete>
-                        {selectedGroup ? <Input
-                            className="w-full"
-                            name="groupName"
-                            label="Nombre del grupo"
-                            placeholder="Escribe un nuevo nombre para el grupo"
-                            defaultValue={selectedGroup ? groups.find((group) => group.id == selectedGroup).name : ""}
-                            required
-                        /> : ""}
+                        {selectedGroup && (
+                            <>
+                                <Input
+                                    className="w-full"
+                                    name="groupName"
+                                    label="Nombre del grupo"
+                                    placeholder="Escribe un nuevo nombre para el grupo"
+                                    defaultValue={groups.find((group) => group.id == selectedGroup)?.name || ""}
+                                    required
+                                />
+                                <div>
+                                    <Chip color="primary" variant="faded" className="my-4">Seleccionar usuarios</Chip>
+                                    <UsersTable
+                                        setUsersForGroup={setUsersForGroup}
+                                        setDeletedUsers={setDeletedUsers}
+                                        setModalUsers={setModalUsers}
+                                        usersForGroup={usersForGroup}
+                                        addUser={
+                                            <AddUserModal
+                                                selectedGroup={selectedGroup}
+                                                usersForGroup={usersForGroup}
+                                                modalUsers={modalUsers}
+                                                setModalUsers={setModalUsers}
+                                                setUsersForGroup={setUsersForGroup}
+                                                isOpen={isOpen}
+                                                onOpen={onOpen}
+                                                onOpenChange={onOpenChange}
+                                            />
+                                        }
+                                    />
+                                    {deletedUsers.length > 0 && (
+                                        <DeletedUsersTable
+                                            items={deletedUsers}
+                                            setUsersForGroup={setUsersForGroup}
+                                            setDeletedUsers={setDeletedUsers}
+                                            columns={COLUMNS_FOR_USERS_TABLE}
+                                            programs={PROGRAMS}
+                                            programColorMap={PROGRAM_COLOR_MAP}
+                                        />
+                                    )}
+                                </div>
+                            </>
+                        )}
 
-                            <div>
-                            <Chip color="primary" variant="faded" className="my-4">Seleccionar usuarios</Chip>
-                            <UsersTable setUsersForGroup={setUsersForGroup} setModalUsers={setModalUsers} usersForGroup={usersForGroup} addUser={<AddUserModal usersForGroup={usersForGroup} modalUsers={modalUsers} setModalUsers={setModalUsers} setUsersForGroup={setUsersForGroup} isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange}/>}/> 
-                            </div>
-                            
                         <div className="flex gap-2 align-center justify-center w-full">
                             <Button color="success" type="submit">
                                 Actualizar Grupo
