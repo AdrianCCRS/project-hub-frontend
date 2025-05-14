@@ -1,8 +1,8 @@
 export const PROJECT_STATES = {
-    PENDING: "#ffd500", // yellow
-    IN_PROGRESS: "#FFA500", // orange
-    COMPLETED: "#36c536", // green
-    CANCELLED: "#ce3535" // red
+    PENDING: "rgba(255,213,0,0.63)", // yellow
+    IN_PROGRESS: "rgba(255,168,0,0.63)", // orange
+    COMPLETED: "rgba(54,197,54,0.39)", // green
+    CANCELLED: "rgba(206,53,53,0.51)" // red
 };
 
 // For tables
