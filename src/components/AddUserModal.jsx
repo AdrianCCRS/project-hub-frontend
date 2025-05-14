@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Table, Pagination, TableHeader, TableBody, TableColumn, TableRow, TableCell, Chip, Tooltip} from "@heroui/react";
 import UsersTableTop from "./UsersTableTop";
-import { PlusIcon, EditIcon } from "./Icons";
+import { PlusIcon } from "./Icons";
 import { useEffect } from "react";
 import SelectedUsersTableModal from "./SelectedUsersTableModal";
 import { useUser } from "../context/useUser";
@@ -82,11 +82,6 @@ function AddUserModal({ selectedGroup, isOpen, onOpenChange, onOpen, modalUsers,
       case "actions":
         return (
           <div className="relative flex justify-center items-center gap-2">
-            <Tooltip content="Visitar perfil">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-          <EditIcon size={20} color="currentColor" />
-              </span>
-            </Tooltip>
             <Tooltip color="success" content="Añadir al grupo">
               <span
           className="text-lg text-primary cursor-pointer active:opacity-50"
