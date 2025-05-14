@@ -49,9 +49,23 @@ function CreateGroup() {
                             placeholder="Escriba un nombre para el grupo"
                             type="text"
                         />
-                    
-                            <UsersTable setUsersForGroup={setUsersForGroup} setModalUsers={setModalUsers} usersForGroup={usersForGroup} addUser={<AddUserModal modalUsers={modalUsers} setModalUsers={setModalUsers} setUsersForGroup={setUsersForGroup} isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange}/>}/> 
-                            
+
+                        <UsersTable
+                            setUsersForGroup={setUsersForGroup}
+                            setModalUsers={setModalUsers}
+                            usersForGroup={usersForGroup}
+                            addUser={
+                                <AddUserModal
+                                    usersForGroup={usersForGroup}
+                                    modalUsers={modalUsers}
+                                    setModalUsers={setModalUsers}
+                                    setUsersForGroup={setUsersForGroup}
+                                    isOpen={isOpen}
+                                    onOpen={onOpen}
+                                    onOpenChange={onOpenChange}
+                                />
+                            }
+                        />
                         <div className="flex gap-2 align-center justify-center w-full">
                             <Button color="success" type="submit">
                                 Crear Grupo
