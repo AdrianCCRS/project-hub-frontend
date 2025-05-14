@@ -8,17 +8,17 @@ import {
     Chip,
 }
 from "@heroui/react"
+import {PROJECT_STATES} from "../config/constants.js";
 export default function CCard ({ pName, pDescription, pLink, pGroup, pState}) {
     return (
         <Card className="max-w-[400px] px-5 min-h-[400px] hover:scale-105 transition-all duration-300 ease-in-out ">
-        <CardHeader className="flex gap-x-32">
+        <CardHeader className="flex justify-between">
           <div className="flex flex-col">
             <p className="text-md text-xl">{pName}</p>
             <p className="text-small text-default-500">{pGroup}</p>
           </div>
           <div>
-            <Chip color="warning" variant="flat">{pState}</Chip>
-          </div>
+<Chip style={{ backgroundColor: `${PROJECT_STATES[pState]}` }} variant="flat">{pState}</Chip>          </div>
         </CardHeader>
         <Divider />
         <CardBody>
