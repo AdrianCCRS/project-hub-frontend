@@ -69,10 +69,10 @@ Posteriormente si desean ejecutar el proyecto completo pueden descargar el backe
 
 ## 👥 Integrantes
 
-- Yeison Adrián Caceres Torres [Yeison Cáceres](https://github.com/AdrianCCRS)
-- Daniel Sebastián Badillo Neira [Sebastián Badillo](https://github.com/SebastianBadillo)
-- José Alejandro Gómez Vargas [Alejandro Gómez](https://github.com/Alejandrogv2304)
+- Yeison Adrián Caceres Torres [Github](https://github.com/AdrianCCRS)
+- Daniel Sebastián Badillo Neira [Github](https://github.com/SebastianBadillo)
+- José Alejandro Gómez Vargas [Github](https://github.com/Alejandrogv2304)
 
 ## 👥 Estructura del proyecto
 
-![Estructura](./assets/estructura_proyecto.png)
+![Estructura](./src/assets/estructura_proyecto.png)
