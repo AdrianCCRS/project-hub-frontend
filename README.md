@@ -60,8 +60,8 @@ git clone https://github.com/AdrianCCRS/project-hub-frontend.git
 Desde la teminal ubicados en la carpeta del proyecto ejecutar los siguientes comandos.
 
 
-npm install
-npm run dev
+- npm install
+- npm run dev
 
 Posteriormente si desean ejecutar el proyecto completo pueden descargar el backend en el siguiente enlace y ejecutar su backend en  Springboot.
 
