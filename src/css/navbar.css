@@ -1,4 +1,5 @@
 html {
     @apply !pr-0;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }

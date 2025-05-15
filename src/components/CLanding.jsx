@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 const LandingPage = () => {
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center w-full overflow-x-hidden">
+    <div className="min-h-screen bg-black text-white flex flex-col items-center w-full overflow-x-hidden overflow-y-auto">
       {/* Hero Section */}
       <div className="w-full flex flex-col md:flex-row items-center justify-center px-4 py-24 bg-gradient-to-b from-black via-[#00e6771f] to-[#00e677]">
         <div className="text-center md:text-left md:w-1/2 mb-8 md:mb-0">
