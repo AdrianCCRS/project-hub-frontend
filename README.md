@@ -27,26 +27,26 @@ Project-Hub es una plataforma web diseñada para estudiantes universitarios que 
 
 ### 🧾 Página Principal
 
-![Landing](./assets/landing.png)
+![Landing](./src/assets/landing.png)
 
 ### 📊 Grupos
 
-![Grupos](./assets/grupos.png)
+![Grupos](./src/assets/login.png)
 
 ### 👥 Perfil de usuario
 
-![Perfil](./assets/perfil.png)
+![Perfil](./src/assets/login.png)
 ### 🧾 Login
 
-![Login](./assets/login.png)
+![Login](./src/assets/login.png)
 
 ### 📊 Edición de grupos
 
-![Edición](./assets/edicion_grupos.png)
+![Edición](./src/assets/login.png)
 
 ### 👤 Creación de grupos
 
-![Creación](./assets/creación_grupos.png)
+![Creación](./src/assets/login.png)
 
 ---
 
@@ -54,7 +54,7 @@ Project-Hub es una plataforma web diseñada para estudiantes universitarios que 
 1. Clona este repositorio:
 
 ```bash
-git clone https://github.com/TuUsuario/Project-Hub.git
+git clone https://github.com/AdrianCCRS/project-hub-frontend.git
 ```
 
 Desde la teminal ubicados en la carpeta del proyecto ejecutar los siguientes comandos.
@@ -69,9 +69,9 @@ Posteriormente si desean ejecutar el proyecto completo pueden descargar el backe
 
 ## 👥 Integrantes
 
-Yeison Adrián Caceres Torres [Yeison Cáceres](https://github.com/AdrianCCRS)
-Daniel Sebastián Badillo Neira [Sebastián Badillo](https://github.com/SebastianBadillo)
-José Alejandro Gómez Vargas [Alejandro Gómez](https://github.com/Alejandrogv2304)
+- Yeison Adrián Caceres Torres [Yeison Cáceres](https://github.com/AdrianCCRS)
+- Daniel Sebastián Badillo Neira [Sebastián Badillo](https://github.com/SebastianBadillo)
+- José Alejandro Gómez Vargas [Alejandro Gómez](https://github.com/Alejandrogv2304)
 
 ## 👥 Estructura del proyecto
 
