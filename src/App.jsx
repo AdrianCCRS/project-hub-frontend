@@ -9,12 +9,14 @@ import CreateGroup from './pages/group/CreateGroup';
 import EditGroup  from './pages/group/EditGroup';
 import CreateProject from './pages/project/CreateProject';
 import EditProject from "./pages/project/EditProject.jsx";
+import Error from './pages/Error.jsx';
 
 import { ToastContainer } from 'react-toastify';
 import { AuthProvider } from './context/useAuth';
 import { ProjectsContextProvider } from './context/useProjects';
 import { UserContextProvider } from './context/useUser';
 import PrivateRoute from './components/PrivateRoute';
+
 
 
 export default function App() {
@@ -77,7 +79,7 @@ export default function App() {
 
                 
                 {/* Ruta 404 opcional */}
-          {/* <Route path="*" element={<div>404 - Página no encontrada</div>} />  */}
+          <Route path="*" element={<Error />} />  
         </Routes>
         <ToastContainer />
       </AuthProvider>
