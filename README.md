@@ -29,24 +29,24 @@ Project-Hub es una plataforma web diseñada para estudiantes universitarios que 
 
 ![Landing](./src/assets/landing.png)
 
-### 📊 Grupos
+### 📊 Proyectos
 
-![Grupos](./src/assets/login.png)
+![Grupos](./src/assets/projects.png)
 
 ### 👥 Perfil de usuario
 
-![Perfil](./src/assets/login.png)
+![Perfil](./src/assets/profile.png)
 ### 🧾 Login
 
 ![Login](./src/assets/login.png)
 
 ### 📊 Edición de grupos
 
-![Edición](./src/assets/login.png)
+![Edición](./src/assets/edit_group.png)
 
 ### 👤 Creación de grupos
 
-![Creación](./src/assets/login.png)
+![Creación](./src/assets/create_group.png)
 
 ---
 
