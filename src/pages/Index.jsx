@@ -5,13 +5,12 @@ import YourProjects from "../components/YourProjects";
 import {HeroUIProvider} from "@heroui/react";
 import { useProjects } from "../context/useProjects";
 import { UserContextProvider } from "../context/useUser";
-
 function Index() {
 
   const {projects, userProjects, isReady} = useProjects();
 
   return (
-    <HeroUIProvider className="overflow-x-hidden">
+    <HeroUIProvider className="overflow-x-hidden overflow-y-hidden">
       <UserContextProvider>
         <CNavbar></CNavbar>
           <main className="flex  flex-row items-center justify-center w-auto h-screen-with-navbar">
