@@ -1,4 +1,4 @@
-# 📋 Project-Hub Frontend - Comprehensive Project Description
+# 📋 Project-Hub Frontend - University Collaboration Platform
 
 ## 🎯 Project Overview
 
