@@ -1,23 +1,10 @@
-# Stage 1: Build
-FROM node:20-alpine AS builder
-
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm ci
-
-COPY . .
-
-# 🔑 Vite lee VITE_API_URL del entorno en build
-ARG VITE_API_URL
-ENV VITE_API_URL=$VITE_API_URL
-
-RUN npm run build
-
-# Stage 2: Production
+# Production-ready Nginx image serving pre-built dist
 FROM nginx:alpine
 
-COPY --from=builder /app/dist /usr/share/nginx/html
+# Copy pre-built dist folder
+COPY dist /usr/share/nginx/html
+
+# Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
