@@ -11,6 +11,10 @@ echo -e "${BLUE}=========================================${NC}"
 echo -e "${BLUE}   Deploying ProjectHub Frontend to K8s  ${NC}"
 echo -e "${BLUE}=========================================${NC}"
 
+# Build and push the image first
+echo -e "\n${GREEN}Step 0: Building and pushing Docker image...${NC}"
+./scripts/build-docker.sh
+
 # Ensure namespace exists
 echo -e "\n${GREEN}Step 1: Ensuring namespace exists...${NC}"
 microk8s kubectl create namespace ${NAMESPACE} --dry-run=client -o yaml | microk8s kubectl apply -f -
