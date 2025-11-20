@@ -3,11 +3,11 @@ import { HeroUIProvider, Card, Form, Input, Button, Chip, Image, useDisclosure }
 import CNavbar from "../../components/CNavbar";
 import UsersTable from "../../components/UsersTable";
 import AddUserModal from "../../components/AddUserModal";
-import {createGroupAPI, addMembersAPI} from "../../services/GroupService";
+import { createGroupAPI, addMembersAPI } from "../../services/GroupService";
 import { toast } from "react-toastify";
 
 function CreateGroup() {
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [usersForGroup, setUsersForGroup] = useState([]);
     const [modalUsers, setModalUsers] = React.useState([]);
 
@@ -16,11 +16,13 @@ function CreateGroup() {
         await createGroupAPI(group.groupName, group.groupLeaderId).then((res) => {
             if (res) {
                 addMembersAPI(usersForGroup.map((user) => ({ groupId: res.data.id, userId: user.id })));
-            }}).then(() => {
-                toast.success("Grupo creado con exito");
-                setUsersForGroup([]);
-                setModalUsers([]);
-            }).catch(e => toast.warning("Ha ocurrido un error en el servidor"));}
+            }
+        }).then(() => {
+            toast.success("Grupo creado con exito");
+            setUsersForGroup([]);
+            setModalUsers([]);
+        }).catch(e => toast.warning("Ha ocurrido un error en el servidor"));
+    }
 
     return (
         <HeroUIProvider className="overflow-x-hidden overflow-y-auto h-screen ">
@@ -74,20 +76,20 @@ function CreateGroup() {
                                 setModalUsers((prevUsers) => {
                                     const newUsers = [...prevUsers, ...usersForGroup];
                                     return newUsers;
-                                  });
+                                });
                                 setUsersForGroup([]);
                             }}>
                                 Borrar todo
                             </Button>
                         </div>
                     </Form>
-                
+
                     <div className="m-5 flex-col items-center justify-center self-center hidden md:flex">
                         <Image
                             isBlurred
                             alt="Babillito Writing"
                             className="m-5"
-                            src="/src/assets/babillito/babillito_groups.png"
+                            src="/babillito/babillito_groups.png"
                             width={300}
                         />
                     </div>

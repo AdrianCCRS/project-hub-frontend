@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
     HeroUIProvider,
     Card,
@@ -13,9 +13,9 @@ import {
 } from "@heroui/react";
 import CNavbar from "../../components/CNavbar";
 import { toast } from "react-toastify";
-import {getGroupsByLeaderAPI} from "../../services/GroupService.jsx";
-import {PROJECT_STATES} from "../../config/constants.js";
-import {createProjectAPI, getProjectsByGroupAPI, updateProjectAPI} from "../../services/ProjectsService.jsx";
+import { getGroupsByLeaderAPI } from "../../services/GroupService.jsx";
+import { PROJECT_STATES } from "../../config/constants.js";
+import { createProjectAPI, getProjectsByGroupAPI, updateProjectAPI } from "../../services/ProjectsService.jsx";
 
 function EditProject() {
     const [groups, setGroups] = useState([]);
@@ -27,8 +27,8 @@ function EditProject() {
     const [originalGroup, setOriginalGroup] = useState(null);
     const [project, setProject] = useState(null);
     useEffect(() => {
-        getGroupsByLeaderAPI(localStorage.getItem("userId")).then((res) => {setGroups(res.data)});
-        }, []);
+        getGroupsByLeaderAPI(localStorage.getItem("userId")).then((res) => { setGroups(res.data) });
+    }, []);
     useEffect(() => {
         if (originalGroup) {
             setEnabledInput(false);
@@ -46,79 +46,79 @@ function EditProject() {
     }, [selectedProjectId]);
 
     const editInputs = (project) => {
-    return (
-        <>
-            <Input
-                isRequired
-                errorMessage="El campo es obligatorio"
-                label="Título del proyecto"
-                labelPlacement="outside"
-                name="projectTitle"
-                placeholder="Escriba un título para el proyecto"
-                type="text"
-                defaultValue={project.title}
-            />
-            <Textarea
-                isRequired
-                errorMessage="El campo es obligatorio"
-                className="w-full"
-                label="Descripción del proyecto"
-                name="description"
-                labelPlacement="outside"
-                placeholder="De una descripción del proyecto"
-                defaultValue={project.description}
-            />
-            <Input
-                isRequired
-                errorMessage="El campo es obligatorio"
-                label="Repositorio del proyecto"
-                name="repoLink"
-                labelPlacement="outside"
-                placeholder="github.com"
-                defaultValue={project.repoLink}
-                type="url"
+        return (
+            <>
+                <Input
+                    isRequired
+                    errorMessage="El campo es obligatorio"
+                    label="Título del proyecto"
+                    labelPlacement="outside"
+                    name="projectTitle"
+                    placeholder="Escriba un título para el proyecto"
+                    type="text"
+                    defaultValue={project.title}
+                />
+                <Textarea
+                    isRequired
+                    errorMessage="El campo es obligatorio"
+                    className="w-full"
+                    label="Descripción del proyecto"
+                    name="description"
+                    labelPlacement="outside"
+                    placeholder="De una descripción del proyecto"
+                    defaultValue={project.description}
+                />
+                <Input
+                    isRequired
+                    errorMessage="El campo es obligatorio"
+                    label="Repositorio del proyecto"
+                    name="repoLink"
+                    labelPlacement="outside"
+                    placeholder="github.com"
+                    defaultValue={project.repoLink}
+                    type="url"
 
-            />
+                />
 
-            <Autocomplete
-                isRequired
-                errorMessage="El campo es obligatorio"
-                isDisabled={enabledInput}
-                className="w-full"
-                defaultItems={groups}
-                label="Cambiar el grupo que dirige el proyecto"
-                placeholder="Elige un nuevo grupo"
-                name="selectedGroupForProject"
-                selectedKey={selectedGroup}
-                onSelectionChange={setSelectedGroup}
-            >
-                {(group) => (
-                    <AutocompleteItem key={group.id}>
-                        {group.name}
-                    </AutocompleteItem>
-                )}
-            </Autocomplete>
+                <Autocomplete
+                    isRequired
+                    errorMessage="El campo es obligatorio"
+                    isDisabled={enabledInput}
+                    className="w-full"
+                    defaultItems={groups}
+                    label="Cambiar el grupo que dirige el proyecto"
+                    placeholder="Elige un nuevo grupo"
+                    name="selectedGroupForProject"
+                    selectedKey={selectedGroup}
+                    onSelectionChange={setSelectedGroup}
+                >
+                    {(group) => (
+                        <AutocompleteItem key={group.id}>
+                            {group.name}
+                        </AutocompleteItem>
+                    )}
+                </Autocomplete>
 
-            <Select
-                isRequired
-                errorMessage="El campo es obligatorio"
-                className="w-full"
-                defaultItems={PROJECT_STATES}
-                label="Elegir el estado del proyecto"
-                placeholder="Elige un estado"
-                name="projectState"
-                defaultSelectedKeys={[selectedState]}
-                onSelectionChange={setSelectedState}
+                <Select
+                    isRequired
+                    errorMessage="El campo es obligatorio"
+                    className="w-full"
+                    defaultItems={PROJECT_STATES}
+                    label="Elegir el estado del proyecto"
+                    placeholder="Elige un estado"
+                    name="projectState"
+                    defaultSelectedKeys={[selectedState]}
+                    onSelectionChange={setSelectedState}
 
-            >
-                {Object.entries(PROJECT_STATES).map(([state, color]) => (
-                    <SelectItem key={state} endContent={<div style={{ backgroundColor: color }} className="w-4 h-4 rounded-full" />}>
-                        {state}
-                    </SelectItem>
-                ))}
-            </Select>
-        </>
-    );
+                >
+                    {Object.entries(PROJECT_STATES).map(([state, color]) => (
+                        <SelectItem key={state} endContent={<div style={{ backgroundColor: color }} className="w-4 h-4 rounded-full" />}>
+                            {state}
+                        </SelectItem>
+                    ))}
+                </Select>
+            </>
+        );
     }
 
     const updateProject = async (project) => {
@@ -130,7 +130,7 @@ function EditProject() {
     }
     return (
         <HeroUIProvider className="overflow-x-hidden overflow-y-auto h-screen ">
-            <CNavbar/>
+            <CNavbar />
             <main className="flex items-center p-16 pt-8 justify-center">
                 <Card className="w-8/12 p-6 shadow-md rounded-lg flex flex-row">
                     <Form
@@ -190,7 +190,7 @@ function EditProject() {
                             )}
                         </Autocomplete>
 
-                        { project ? editInputs(project) : ""}
+                        {project ? editInputs(project) : ""}
 
                         <div className="flex gap-2 align-center justify-center w-full">
                             <Button color="success" type="submit">
@@ -207,7 +207,7 @@ function EditProject() {
                             isBlurred
                             alt="Babillito computing"
                             className="m-5"
-                            src="/src/assets/babillito/babillito_computing.png"
+                            src="/babillito/babillito_computing.png"
                             width={300}
                         />
                     </div>

@@ -23,12 +23,12 @@ import {
 } from "../../services/GroupService";
 import { toast } from "react-toastify";
 import DeletedUsersTable from "../../components/DeletedUsersTable.jsx";
-import {useUser} from "../../context/useUser.jsx";
-import {COLUMNS_FOR_USERS_TABLE, PROGRAM_COLOR_MAP, PROGRAMS} from "../../config/constants.js";
+import { useUser } from "../../context/useUser.jsx";
+import { COLUMNS_FOR_USERS_TABLE, PROGRAM_COLOR_MAP, PROGRAMS } from "../../config/constants.js";
 
 function EditGroup() {
-    const {getAllUsers} = useUser();
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const { getAllUsers } = useUser();
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [usersForGroup, setUsersForGroup] = useState([]);
     const [deletedUsers, setDeletedUsers] = useState([]);
     const [modalUsers, setModalUsers] = React.useState([]);
@@ -39,7 +39,8 @@ function EditGroup() {
         getGroupsByLeaderAPI(localStorage.getItem("userId")).then((res) => {
             if (res) {
                 setGroups(res.data)
-            }}).catch(e => toast.warning("Ha ocurrido un error en el servidor"));
+            }
+        }).catch(e => toast.warning("Ha ocurrido un error en el servidor"));
     }, []);
 
     useEffect(() => {
@@ -47,7 +48,8 @@ function EditGroup() {
         getMembersFromGroupAPI(selectedGroup).then((res) => {
             if (res) {
                 setUsersForGroup(res.data);
-            }}).catch(e => toast.warning("Ha ocurrido un error en el servidor"));
+            }
+        }).catch(e => toast.warning("Ha ocurrido un error en el servidor"));
     }, [selectedGroup]);
 
 
@@ -58,7 +60,8 @@ function EditGroup() {
                 if (deletedUsers.length > 0) {
                     deleteMembersAPI(deletedUsers.map((user) => ({ groupId: selectedGroup, userId: user.id })), selectedGroup);
                 }
-            }}
+            }
+        }
         ).then(() => {
             toast.success("Grupo actualizado con exito");
             setUsersForGroup([]);
@@ -69,9 +72,10 @@ function EditGroup() {
             getGroupsByLeaderAPI(localStorage.getItem("userId")).then((res) => {
                 if (res) {
                     setGroups(res.data)
-                }}).catch(e => toast.warning("Ha ocurrido un error en el servidor al recargar los grupos"));
+                }
+            }).catch(e => toast.warning("Ha ocurrido un error en el servidor al recargar los grupos"));
         }
-        ).catch(e => toast.warning("Ha ocurrido un error en el servidor")); 
+        ).catch(e => toast.warning("Ha ocurrido un error en el servidor"));
     }
 
     return (
@@ -92,21 +96,21 @@ function EditGroup() {
                         }}
                     >
                         <Chip className="w-full font-manrope text-xl text-center" color="success">Edita un grupo</Chip>
-                            <Autocomplete
-                                className="w-full"
-                                defaultItems={groups}
-                                label="Elegir el grupo a editar"
-                                placeholder="Elige un grupo"
-                                name="selectedGroup"
-                                selectedKey={selectedGroup}
-                                onSelectionChange={setSelectedGroup}
-                            >
-                                {(group) => (
-                                    <AutocompleteItem key={group.id}>
-                                        {group.name}
-                                    </AutocompleteItem>
-                                )}
-                            </Autocomplete>
+                        <Autocomplete
+                            className="w-full"
+                            defaultItems={groups}
+                            label="Elegir el grupo a editar"
+                            placeholder="Elige un grupo"
+                            name="selectedGroup"
+                            selectedKey={selectedGroup}
+                            onSelectionChange={setSelectedGroup}
+                        >
+                            {(group) => (
+                                <AutocompleteItem key={group.id}>
+                                    {group.name}
+                                </AutocompleteItem>
+                            )}
+                        </Autocomplete>
                         {selectedGroup && (
                             <>
                                 <Input
@@ -159,20 +163,20 @@ function EditGroup() {
                                 setModalUsers((prevUsers) => {
                                     const newUsers = [...prevUsers, ...usersForGroup];
                                     return newUsers;
-                                  });
+                                });
                                 setUsersForGroup([]);
                             }}>
                                 Borrar todo
                             </Button>
                         </div>
                     </Form>
-                
+
                     <div className="m-5 flex-col items-center justify-center self-center hidden md:flex">
                         <Image
                             isBlurred
                             alt="Babillito Writing"
                             className="m-5"
-                            src="/src/assets/babillito/babillito_groups.png"
+                            src="/babillito/babillito_groups.png"
                             width={300}
                         />
                     </div>

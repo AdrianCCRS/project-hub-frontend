@@ -10,7 +10,7 @@ import {
   NavbarMenu,
 } from "@heroui/react";
 import { CNavDropdownMenu } from "./CNavDropdownMenu";
-import { 
+import {
   CreateProject,
   CreateGroupIcon,
   Add,
@@ -24,12 +24,12 @@ import {
 import React from "react";
 import "../css/navbar.css";
 import { useUser } from "../context/useUser";
-import {logout} from "../services/AuthService.jsx";
+import { logout } from "../services/AuthService.jsx";
 
 
 export const PHLogo = () => {
   return (
-    <img src="../src/assets/phlogo.svg" alt="logo"/>
+    <img src="/phlogo.svg" alt="logo" />
   );
 };
 
@@ -73,13 +73,13 @@ export default function CNavbar() {
     "Cerrar sesión"
   ];
 
-  const {user} = useUser();
+  const { user } = useUser();
 
   return (
     <Navbar maxWidth="full" className="font-manrope" isBordered={true} isBlurred={true} shouldHideOnScroll={true}>
       <NavbarBrand>
         <PHLogo />
-        <Link color="foreground" href="/projects"  className="font-bold text-xl ml-4">Dashboard</Link>
+        <Link color="foreground" href="/projects" className="font-bold text-xl ml-4">Dashboard</Link>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="end">
         <CNavDropdownMenu
@@ -117,38 +117,38 @@ export default function CNavbar() {
         ></CNavDropdownMenu>
         <Divider orientation="vertical" className="h-7"></Divider>
         <CNavDropdownMenu
-        btnClasses="text-green-600"
-        tooltipContent="Perfil"
-        btnEndContent=""
-        btnContent={icons.profile}
-        ariaLabel="Perfil"
-        btnSize="sm"
-        btnVariant="solid"
-        placement="bottom-end"
-        disabledKeys={["profile_info"]}
-        dropdownItems={[
-          {
-            key: "profile_info",
-            description: user?.email,
-            content: <Chip color="success" variant="dot">{user?.firstName + " " + user?.lastName}</Chip>,
-            className: "opacity-100",
-          },
-          {
-            key: "profile",
-            description: "Edita tu perfil",
-            startContent: icons.profile,
-            content: "Editar perfil",
-            href: "/profile/edit",
-          },
-          {
-            key: "logout",
-            description: "Cierra tu sesión",
-            startContent: icons.logout,
-            content: "Cerrar sesión",
-            color:"danger",
-            onPress: { l: logout}
-          }
-        ]}
+          btnClasses="text-green-600"
+          tooltipContent="Perfil"
+          btnEndContent=""
+          btnContent={icons.profile}
+          ariaLabel="Perfil"
+          btnSize="sm"
+          btnVariant="solid"
+          placement="bottom-end"
+          disabledKeys={["profile_info"]}
+          dropdownItems={[
+            {
+              key: "profile_info",
+              description: user?.email,
+              content: <Chip color="success" variant="dot">{user?.firstName + " " + user?.lastName}</Chip>,
+              className: "opacity-100",
+            },
+            {
+              key: "profile",
+              description: "Edita tu perfil",
+              startContent: icons.profile,
+              content: "Editar perfil",
+              href: "/profile/edit",
+            },
+            {
+              key: "logout",
+              description: "Cierra tu sesión",
+              startContent: icons.logout,
+              content: "Cerrar sesión",
+              color: "danger",
+              onPress: { l: logout }
+            }
+          ]}
         >
 
         </CNavDropdownMenu>
@@ -164,7 +164,7 @@ export default function CNavbar() {
               }
               href="#"
               size="lg"
-              >
+            >
               {Object.values(icons)[index] || null}
               {item}
             </Link>
@@ -172,9 +172,9 @@ export default function CNavbar() {
         ))}
       </NavbarMenu>
       <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
-        />
+        aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        className="sm:hidden"
+      />
     </Navbar>
   );
 }

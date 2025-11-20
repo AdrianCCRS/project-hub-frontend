@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
     HeroUIProvider,
     Card,
@@ -15,16 +15,16 @@ import CNavbar from "../../components/CNavbar";
 import UsersTable from "../../components/UsersTable";
 import AddUserModal from "../../components/AddUserModal";
 import { toast } from "react-toastify";
-import {getGroupsByLeaderAPI} from "../../services/GroupService.jsx";
-import {PROJECT_STATES} from "../../config/constants.js";
-import {createProjectAPI} from "../../services/ProjectsService.jsx";
+import { getGroupsByLeaderAPI } from "../../services/GroupService.jsx";
+import { PROJECT_STATES } from "../../config/constants.js";
+import { createProjectAPI } from "../../services/ProjectsService.jsx";
 
 function CreateProject() {
     const [groups, setGroups] = useState([]);
     const [selectedState, setSelectedState] = useState(null);
     const [selectedGroup, setSelectedGroup] = useState(null);
     useEffect(() => {
-        getGroupsByLeaderAPI(localStorage.getItem("userId")).then((res) => {setGroups(res.data)});
+        getGroupsByLeaderAPI(localStorage.getItem("userId")).then((res) => { setGroups(res.data) });
     }, []);
 
 
@@ -37,7 +37,7 @@ function CreateProject() {
     }
     return (
         <HeroUIProvider className="overflow-x-hidden overflow-y-auto h-screen ">
-            <CNavbar/>
+            <CNavbar />
             <main className="flex items-center p-16 pt-8 justify-center">
                 <Card className="w-8/12 p-6 shadow-md rounded-lg flex flex-row">
                     <Form
@@ -132,7 +132,7 @@ function CreateProject() {
                             isBlurred
                             alt="Babillito computing"
                             className="m-5"
-                            src="/src/assets/babillito/babillito_computing.png"
+                            src="/babillito/babillito_computing.png"
                             width={300}
                         />
                     </div>

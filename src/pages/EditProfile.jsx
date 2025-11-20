@@ -1,4 +1,4 @@
-import { 
+import {
     HeroUIProvider,
     Card,
     Form,
@@ -15,14 +15,14 @@ import {
     Link
 } from "@heroui/react";
 import React from "react";
-import {parseDate} from "@internationalized/date";
-import {ShowPassword, HiddenPassword} from "../components/Icons";
-import {useUser} from "../context/useUser";
+import { parseDate } from "@internationalized/date";
+import { ShowPassword, HiddenPassword } from "../components/Icons";
+import { useUser } from "../context/useUser";
 import CNavbar from "../components/CNavbar";
 
 function EditProfile() {
     const [isVisible, setIsVisible] = React.useState(false);
-    const {user, isReady, updateUserData} = useUser();
+    const { user, isReady, updateUserData } = useUser();
     const toggleVisibility = () => setIsVisible(!isVisible);
 
     const programs = [
@@ -36,10 +36,10 @@ function EditProfile() {
         { id: 8, name: "Ingeniería Ambiental" },
         { id: 9, name: "Ingeniería Biomédica" },
         { id: 10, name: "Ingeniería Eléctrica" },
-      ];
-      
+    ];
 
-      return (
+
+    return (
         <HeroUIProvider className="overflow-x-hidden overflow-y-auto h-screen ">
             <CNavbar />
             {isReady ? (
@@ -52,7 +52,7 @@ function EditProfile() {
                                 e.preventDefault();
                                 let data = Object.fromEntries(new FormData(e.currentTarget));
                                 data.id = user.id;
-                                 updateUserData(data)
+                                updateUserData(data)
                             }}
                         >
                             <Chip className="w-full font-manrope text-xl text-center" color="success">Editar perfil</Chip>
@@ -75,10 +75,10 @@ function EditProfile() {
                                     name="lastName"
                                     placeholder="Cambie su apellido"
                                     type="text"
-                                    defaultValue={user?.lastName || ""} 
+                                    defaultValue={user?.lastName || ""}
                                 />
                             </div>
-    
+
                             <Input
                                 isRequired
                                 errorMessage="Por favor, ingrese un correo electrónico válido"
@@ -89,7 +89,7 @@ function EditProfile() {
                                 type="email"
                                 defaultValue={user?.email || ""}
                             />
-    
+
                             <Autocomplete
                                 className="w-full"
                                 defaultItems={programs}
@@ -104,7 +104,7 @@ function EditProfile() {
                                     </AutocompleteItem>
                                 )}
                             </Autocomplete>
-    
+
                             <Input
                                 className="w-full"
                                 isRequired
@@ -129,7 +129,7 @@ function EditProfile() {
                                 placeholder="Ingrese su contraseña"
                                 type={isVisible ? "text" : "password"}
                             />
-    
+
                             <Textarea
                                 isRequired
                                 className="w-full"
@@ -139,7 +139,7 @@ function EditProfile() {
                                 placeholder="Enter your description"
                                 defaultValue={user?.description || ""}
                             />
-    
+
                             <div className="flex gap-2">
                                 <Button color="success" type="submit">
                                     Actualizar
@@ -149,13 +149,13 @@ function EditProfile() {
                                 </Button>
                             </div>
                         </Form>
-    
+
                         <div className="flex-col items-center justify-center self-center hidden md:flex">
                             <Image
                                 isBlurred
                                 alt="Babillito Writing"
                                 className="m-5"
-                                src="../src/assets/babillito/babillito_writing.png"
+                                src="/babillito/babillito_writing.png"
                                 width={240}
                             />
                         </div>
@@ -163,15 +163,15 @@ function EditProfile() {
                     <div className="w-auto max-w-2xl pr-0 pl-16 shadow-md rounded-lg flex flex-col items-center gap-20">
                         <Card className="min-w-[400px] min-h-[250px] p-2 bg-gradient-to-tl from-[#0f0f0f] to-[#032b0c]">
                             <div className="relative w-full h-full">
-                                <img 
-                                    src="../src/assets/babillito/babillito_nobg.png" 
-                                    alt="Babillo Background" 
+                                <img
+                                    src="/babillito/babillito_nobg.png"
+                                    alt="Babillo Background"
                                     className="absolute left-24 opacity-35 w-50 h-auto pointer-events-none"
                                 />
                             </div>
                             <CardHeader className="flex flex-col items-start gap-2">
                                 <h1 className="font-manrope text-2xl">{user?.firstName + " " + user?.lastName}</h1>
-                                <Chip 
+                                <Chip
                                     color="success"
                                     variant="faded"
                                     className="w-full font-manrope text-sm text-center"
@@ -180,7 +180,7 @@ function EditProfile() {
                                 </Chip>
                             </CardHeader>
                             <CardBody className="gap-3">
-                                <Chip 
+                                <Chip
                                     color="success"
                                     variant="flat"
                                     className="w-full font-manrope text-sm text-center backdrop:blur-2xl"
@@ -197,9 +197,9 @@ function EditProfile() {
                         </Card>
                         <Link color="foreground" href="https://uis.edu.co/es/" isExternal={true} className="gap-3 flex flex-col hover:scale-105 transition-transform duration-300">
                             <h1 className="font-manrope text-xl">Desarrollado por estudiantes de: </h1>
-                            <img 
-                                src="../src/assets/uisLogo.png" 
-                                alt="UIS Logo" 
+                            <img
+                                src="/uisLogo.png"
+                                alt="UIS Logo"
                                 width={300}
                             />
                         </Link>
@@ -211,7 +211,7 @@ function EditProfile() {
                 </div>
             )}
         </HeroUIProvider>
-    );    
-  }
-  
-  export default EditProfile;
+    );
+}
+
+export default EditProfile;

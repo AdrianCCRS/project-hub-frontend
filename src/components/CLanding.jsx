@@ -14,11 +14,11 @@ const LandingPage = () => {
             Un espacio hecho para estudiantes curiosos y creativos de la UIS.
           </p>
         </div>
-        
-        <img 
-          src="public/landing_babillito_nobg.png" 
-          alt="Mascota Babillito saludando" 
-          className="w-1/2 md:w-1/3 max-w-xs animate-float" 
+
+        <img
+          src="/landing_babillito_nobg.png"
+          alt="Mascota Babillito saludando"
+          className="w-1/2 md:w-1/3 max-w-xs animate-float"
         />
       </div>
 
@@ -27,16 +27,16 @@ const LandingPage = () => {
         <p className="text-2xl font-bold text-black">
           ¡Muéstranos tu mejor proyecto! 🐊
         </p>
-        
+
         <div className="flex gap-4">
           <NavLink
-            to="/register" 
+            to="/register"
             className="px-8 py-3 text-white font-semibold bg-[#1d201f] rounded-lg hover:bg-[#5c5f5c] transition-colors"
           >
             Registrarse
           </NavLink>
           <NavLink
-            to="/login" 
+            to="/login"
             className="px-8 py-3 text-white font-semibold bg-[#1d201f] rounded-lg hover:bg-[#5c5f5c] transition-colors"
           >
             Log-in
@@ -54,11 +54,11 @@ const LandingPage = () => {
             Trabaja en conjunto tu próximo proyecto
           </p>
         </div>
-        
-        <img 
-          src="public/babillito_groups.png" 
-          alt="Mascota Babillito en grupo" 
-          className="w-1/2 md:w-1/4 bg-[#03582f] rounded-lg" 
+
+        <img
+          src="/babillito_groups.png"
+          alt="Mascota Babillito en grupo"
+          className="w-1/2 md:w-1/4 bg-[#03582f] rounded-lg"
         />
       </div>
     </div>
