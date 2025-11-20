@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: projecthub-frontend
+  namespace: projecthub-frontend
+  labels:
+    app: projecthub-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: projecthub-frontend
+  template:
+    metadata:
+      labels:
+        app: projecthub-frontend
+    spec:
+      containers:
+      - name: projecthub-frontend
+        image: localhost:32000/projecthub-frontend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
