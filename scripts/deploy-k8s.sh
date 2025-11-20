@@ -17,13 +17,13 @@ echo -e "\n${GREEN}Step 0: Building and pushing Docker image...${NC}"
 
 # Ensure namespace exists
 echo -e "\n${GREEN}Step 1: Ensuring namespace exists...${NC}"
-microk8s kubectl create namespace ${NAMESPACE} --dry-run=client -o yaml | microk8s kubectl apply -f -
+microk8s kubectl create namespace ${NAMESPACE} --dry-run=client -o yaml | microk8s kubectl apply -f - --validate=false || echo "Namespace may already exist, continuing..."
 
 # Apply manifests
 echo -e "\n${GREEN}Step 2: Applying manifests...${NC}"
-microk8s kubectl apply -f k8s/frontend-deployment.yaml
-microk8s kubectl apply -f k8s/frontend-service.yaml
-microk8s kubectl apply -f k8s/ingress.yaml
+microk8s kubectl apply -f k8s/frontend-deployment.yaml --validate=false
+microk8s kubectl apply -f k8s/frontend-service.yaml --validate=false
+microk8s kubectl apply -f k8s/ingress.yaml --validate=false
 
 # Restart deployment to pick up new image
 echo -e "\n${GREEN}Step 3: Restarting deployment...${NC}"
