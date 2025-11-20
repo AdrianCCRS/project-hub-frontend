@@ -1,17 +1,25 @@
 #!/bin/bash
 
+# Build Docker image for ProjectHub Frontend
+# Usage: ./build-docker.sh [version]
+
+set -e
+
+# Configuration
+IMAGE_NAME="projecthub-frontend"
+VERSION="${1:-latest}"
+REGISTRY="${DOCKER_REGISTRY:-}"  # Set DOCKER_REGISTRY env var to push to a registry
+
 # Colors for output
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 RED='\033[0;31m'
+YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-IMAGE_NAME="localhost:32000/projecthub-frontend"
-TAG="latest"
-
-echo -e "${BLUE}=========================================${NC}"
-echo -e "${BLUE}   Building ProjectHub Frontend Image    ${NC}"
-echo -e "${BLUE}=========================================${NC}"
+echo -e "${BLUE}========================================${NC}"
+echo -e "${BLUE}Building Docker Image for Frontend${NC}"
+echo -e "${BLUE}========================================${NC}"
 
 # Check if dist folder exists
 if [ ! -d "dist" ]; then
@@ -20,12 +28,72 @@ if [ ! -d "dist" ]; then
     exit 1
 fi
 
-# Build the image (no build args needed, dist is already built)
-echo -e "\n${GREEN}Step 1: Building Docker image from pre-built dist...${NC}"
-docker build -t ${IMAGE_NAME}:${TAG} .
+# Build the Docker image
+echo -e "\n${GREEN}Step 1: Building Docker image...${NC}"
+docker build -t ${IMAGE_NAME}:${VERSION} .
 
-# Push to registry
-echo -e "\n${GREEN}Step 2: Pushing to local registry...${NC}"
-docker push ${IMAGE_NAME}:${TAG}
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✓ Docker image built successfully: ${IMAGE_NAME}:${VERSION}${NC}"
+else
+    echo -e "${RED}✗ Docker build failed${NC}"
+    exit 1
+fi
 
-echo -e "\n${BLUE}Build and push completed!${NC}"
+# Tag as latest if version is specified
+if [ "$VERSION" != "latest" ]; then
+    echo -e "\n${GREEN}Step 2: Tagging as latest...${NC}"
+    docker tag ${IMAGE_NAME}:${VERSION} ${IMAGE_NAME}:latest
+    echo -e "${GREEN}✓ Tagged as ${IMAGE_NAME}:latest${NC}"
+fi
+
+# Push to registry if DOCKER_REGISTRY is set
+if [ -n "$REGISTRY" ]; then
+    echo -e "\n${GREEN}Step 3: Pushing to registry...${NC}"
+    docker tag ${IMAGE_NAME}:${VERSION} ${REGISTRY}/${IMAGE_NAME}:${VERSION}
+    docker push ${REGISTRY}/${IMAGE_NAME}:${VERSION}
+    
+    if [ "$VERSION" != "latest" ]; then
+        docker tag ${IMAGE_NAME}:${VERSION} ${REGISTRY}/${IMAGE_NAME}:latest
+        docker push ${REGISTRY}/${IMAGE_NAME}:latest
+    fi
+    
+    echo -e "${GREEN}✓ Pushed to registry: ${REGISTRY}/${IMAGE_NAME}:${VERSION}${NC}"
+else
+    echo -e "\n${BLUE}ℹ DOCKER_REGISTRY not set, skipping push to registry${NC}"
+fi
+
+# Push to MicroK8s local registry if available
+if command -v microk8s &> /dev/null; then
+    echo -e "\n${GREEN}Step 4: Pushing to MicroK8s local registry...${NC}"
+    
+    # Tag image for local registry
+    docker tag ${IMAGE_NAME}:${VERSION} localhost:32000/${IMAGE_NAME}:${VERSION}
+    
+    # Push to MicroK8s registry
+    docker push localhost:32000/${IMAGE_NAME}:${VERSION}
+    
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✓ Image pushed to MicroK8s registry (localhost:32000)${NC}"
+    else
+        echo -e "${RED}✗ Failed to push to MicroK8s registry${NC}"
+        echo -e "${YELLOW}Make sure MicroK8s registry is enabled: microk8s enable registry${NC}"
+        exit 1
+    fi
+else
+    echo -e "\n${BLUE}ℹ MicroK8s not detected, skipping registry push${NC}"
+fi
+
+# Display image info
+echo -e "\n${BLUE}========================================${NC}"
+echo -e "${GREEN}Build Summary:${NC}"
+echo -e "  Image: ${IMAGE_NAME}:${VERSION}"
+echo -e "  Size: $(docker images ${IMAGE_NAME}:${VERSION} --format "{{.Size}}")"
+if [ -n "$REGISTRY" ]; then
+    echo -e "  Registry: ${REGISTRY}/${IMAGE_NAME}:${VERSION}"
+fi
+if command -v microk8s &> /dev/null; then
+    echo -e "  MicroK8s: ✓ Imported"
+fi
+echo -e "${BLUE}========================================${NC}"
+
+echo -e "\n${GREEN}✓ Build completed successfully!${NC}"
